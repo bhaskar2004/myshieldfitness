@@ -1,0 +1,385 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════════════════════
+   CSS DESIGN TOKENS
+   Theme: Bottle Green — warm, earthy, premium
+═══════════════════════════════════════════════════════════════ */
+
+:root {
+  color-scheme: light;
+
+  /* ── Fonts ── */
+  --font-display: "Orbitron", sans-serif;
+  --font-body: "Space Grotesk", sans-serif;
+  --font-mono: "Space Grotesk", monospace;
+
+  /* ── Surfaces ── */
+  --background: oklch(0.975 0.016 72);
+  /* vellum ivory            */
+  --foreground: oklch(0.12 0.026 40);
+  /* deep warm charcoal ink  */
+  --card: oklch(0.983 0.013 70);
+  /* slightly brighter paper */
+  --card-foreground: oklch(0.12 0.026 40);
+  --popover: oklch(0.983 0.013 70);
+  --popover-foreground: oklch(0.12 0.026 40);
+
+  /* ── Brand — bottle green ── */
+  --primary: oklch(0.72 0.18 48);
+  /* deep bottle green       */
+  --primary-foreground: oklch(0.978 0.010 70);
+
+  /* ── Supporting surfaces ── */
+  --secondary: oklch(0.938 0.018 68);
+  /* warm linen              */
+  --secondary-foreground: oklch(0.16 0.024 42);
+  --muted: oklch(0.938 0.018 68);
+  --muted-foreground: oklch(0.50 0.022 52);
+  /* warm stone mid-tone     */
+
+  /* ── Accent ── */
+  --accent: oklch(0.72 0.18 48 / 0.08);
+  --accent-foreground: oklch(0.72 0.18 48);
+
+  /* ── State ── */
+  --destructive: oklch(0.52 0.22 25);
+  --destructive-foreground: oklch(0.975 0.010 68);
+
+  /* ── Chrome ── */
+  --border: oklch(0.12 0.026 40);
+  /* deep warm charcoal ink (black) */
+  --input: oklch(0.882 0.020 65);
+  --ring: oklch(0.72 0.18 48);
+  --radius: 0rem;
+
+  /* ── About section tokens ── */
+  --about-rule: oklch(0.882 0.020 65);
+  --about-ghost: oklch(0.12 0.026 40 / 0.028);
+  --about-stat: oklch(0.12 0.026 40);
+  --about-meta: oklch(0.50 0.022 52);
+
+  /* ── Contact section tokens (always dark surface) ── */
+  --contact-bg: oklch(0.12 0.026 40);
+  --contact-surface: oklch(0.18 0.028 42);
+  --contact-rule: oklch(1 0 0 / 0.09);
+  --contact-text: oklch(1 0 0 / 0.78);
+  --contact-meta: oklch(1 0 0 / 0.48);
+  --contact-ghost: oklch(1 0 0 / 0.032);
+  --contact-pill: oklch(1 0 0 / 0.13);
+
+  /* ── Charts ── */
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+
+  /* ── Shimmer ── */
+  --shimmer-highlight: oklch(0.99 0.008 68 / 0.70);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BASE RESET
+═══════════════════════════════════════════════════════════════ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TYPOGRAPHY
+═══════════════════════════════════════════════════════════════ */
+
+h1,
+h2,
+h3,
+h4,
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  font-style: italic;
+  color: var(--foreground);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCROLLBAR
+═══════════════════════════════════════════════════════════════ */
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--card);
+}
+
+::-webkit-scrollbar-thumb {
+  background: oklch(0.72 0.18 48 / 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SELECTION
+═══════════════════════════════════════════════════════════════ */
+
+::selection {
+  background-color: oklch(0.72 0.18 48 / 0.20);
+  color: var(--primary-foreground);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   UTILITY CLASSES
+═══════════════════════════════════════════════════════════════ */
+
+/* ── Noise texture ── */
+.noise-overlay {
+  position: relative;
+}
+
+.noise-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.02;
+}
+
+/* ── Accent glow ── */
+.glow-accent {
+  box-shadow:
+    0 0 16px oklch(0.72 0.18 48 / 0.20),
+    0 0 48px oklch(0.72 0.18 48 / 0.07);
+}
+
+/* ── Glow text ── */
+.glow-text {
+  text-shadow: 0 0 28px oklch(0.72 0.18 48 / 0.30);
+}
+
+/* ── Gradient border ── */
+.gradient-border {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(135deg,
+      oklch(0.72 0.18 48 / 0.4),
+      oklch(0.50 0.022 52 / 0.3),
+      var(--border)) border-box;
+}
+
+/* ── Hero grid — warm tinted ── */
+.hero-grid {
+  background-image:
+    linear-gradient(oklch(0.72 0.18 48 / 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0.72 0.18 48 / 0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* ── Stripe pattern ── */
+.stripe-pattern {
+  background: repeating-linear-gradient(45deg,
+      transparent,
+      transparent 10px,
+      oklch(0.72 0.18 48 / 0.03) 10px,
+      oklch(0.72 0.18 48 / 0.03) 20px);
+}
+
+/* ── Card hover lift ── */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 48px oklch(0.72 0.18 48 / 0.08);
+}
+
+/* ── Image zoom ── */
+.img-zoom {
+  overflow: hidden;
+}
+
+.img-zoom img {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.img-zoom:hover img {
+  transform: scale(1.07);
+}
+
+/* ── Accent rule line ── */
+.accent-line {
+  width: 3px;
+  height: 32px;
+  background: linear-gradient(180deg, var(--primary), transparent);
+  border-radius: 2px;
+}
+
+/* ── Stat gradient number ── */
+.stat-number {
+  font-family: var(--font-display);
+  background: linear-gradient(135deg,
+      var(--foreground) 30%,
+      var(--primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Glass card ── */
+.glass-card {
+  background: oklch(0.983 0.013 70 / 0.80);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+}
+
+/* ── Primary button ── */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg,
+      oklch(1 0 0 / 0.10) 0%,
+      transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.btn-primary:hover::before {
+  opacity: 1;
+}
+
+.btn-primary:hover {
+  background: oklch(0.30 0.095 155);
+  box-shadow: 0 0 28px oklch(0.72 0.18 48 / 0.35);
+  transform: translateY(-2px);
+}
+
+/* ── Responsive video ── */
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   KEYFRAMES
+═══════════════════════════════════════════════════════════════ */
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-rev {
+  0% {
+    transform: translateX(-50%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-16px);
+  }
+}
+
+@keyframes glow-pulse {
+  0% {
+    box-shadow: 0 0 6px oklch(0.72 0.18 48 / 0.25);
+  }
+
+  100% {
+    box-shadow: 0 0 22px oklch(0.72 0.18 48 / 0.55), 0 0 50px oklch(0.72 0.18 48 / 0.15);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-150%) skewX(-20deg);
+  }
+
+  100% {
+    transform: translateX(350%) skewX(-20deg);
+  }
+}
+
+/* ── Convenience animation classes ── */
+.marquee-track {
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-track-rev {
+  animation: marquee-rev 28s linear infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 2.2s ease-in-out infinite;
+}
