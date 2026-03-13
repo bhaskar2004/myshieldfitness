@@ -465,7 +465,7 @@ export default function Contact() {
       <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-purple-600/[0.04] blur-[160px] rounded-full pointer-events-none" />
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
 
         {/* ── Header ── */}
         <div className="text-center mb-10 sm:mb-14">

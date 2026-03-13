@@ -483,7 +483,7 @@ export default function InstagramSection() {
       <div className="absolute top-1/4 right-0 w-[600px] h-[600px] bg-purple-600/5 blur-[180px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-accent/4 blur-[120px] rounded-full pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+      <div className="w-full px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
 
         {/* ── Header ── */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-10">

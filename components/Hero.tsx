@@ -353,7 +353,7 @@ function AddressBar() {
         style={{ background: `linear-gradient(90deg, transparent, ${rgba(ACCENT, 0.45)}, transparent)` }} />
       <div className="backdrop-blur-md px-4 py-2.5 sm:py-2"
         style={{ background: "oklch(0.975 0.016 72 / 0.88)", borderTop: `1px solid var(--border)` }}>
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-4">
+        <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-4 lg:px-8 px-4">
           <p className="flex items-start sm:items-center gap-2 font-mono text-[9px] sm:text-[10px] tracking-[1.5px] text-center sm:text-left"
             style={{ color: "var(--muted-foreground)" }}>
             <FiMapPin size={10} className="flex-shrink-0 mt-px sm:mt-0" style={{ color: `rgb(${ACCENT})` }} />
@@ -461,7 +461,7 @@ export default function Hero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-32 sm:pb-28">
+      <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-32 sm:pb-28">
 
         {/* ── Status pills ── */}
         <motion.div

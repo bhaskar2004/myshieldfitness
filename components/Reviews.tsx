@@ -381,7 +381,7 @@ export default function Reviews() {
       <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-yellow-500/3 blur-[160px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-accent/4 blur-[140px] rounded-full pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
 
         {/* ── Header ── */}
         <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between mb-10 gap-6">

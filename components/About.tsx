@@ -231,7 +231,7 @@ export default function About() {
         style={{ background: "linear-gradient(90deg, var(--primary), oklch(0.72 0.18 48 / 0.1), transparent)" }}
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
           {/* ══ CONTENT ══ */}
           <motion.div

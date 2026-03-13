@@ -357,7 +357,7 @@ export default function Facilities() {
         />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8">
 
         {/* ── Section Header ── */}
         <div className="mb-16 sm:mb-24">
