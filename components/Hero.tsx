@@ -524,7 +524,7 @@ export default function Hero() {
         <motion.p
           initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.80 }}
-          className="text-sm sm:text-base md:text-lg max-w-xl leading-relaxed mb-8 sm:mb-10 font-body"
+          className="text-sm sm:text-base md:text-lg max-w-2xl leading-relaxed mb-8 sm:mb-10 font-body"
           style={{ color: "var(--muted-foreground)" }}
         >
           Forge your ultimate physique with elite coaching and{" "}

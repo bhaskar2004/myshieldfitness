@@ -232,7 +232,7 @@ export default function About() {
       />
 
       <div className="w-full px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
+        <div className="max-w-6xl mx-auto text-center flex flex-col items-center">
           {/* ══ CONTENT ══ */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}

@@ -55,10 +55,10 @@ function FooterBody() {
           {/* Logo */}
           <div className="flex items-center gap-3 mb-5">
             <div
-              className="w-11 h-11 rounded-xl flex items-center justify-center shadow-lg"
+              className="w-11 h-11 rounded-xl flex items-center justify-center shadow-lg overflow-hidden"
               style={{ background: "var(--primary)", boxShadow: "0 4px 16px oklch(0.72 0.18 48 / 0.25)" }}
             >
-              <span className="font-display text-[var(--primary-foreground)] text-2xl font-black leading-none">S</span>
+              <img src="/favicon.jpg" alt="Shield's Fitness" className="w-full h-full object-cover scale-150" />
             </div>
             <div>
               <p className="font-display font-black text-lg leading-none tracking-[0.1em] sm:tracking-[0.15em]" style={{ color: "var(--foreground)" }}>
