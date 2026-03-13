@@ -213,9 +213,10 @@ export default function Navbar() {
                   style={{ background: "oklch(0.72 0.18 48 / 0.1)", border: "1px solid oklch(0.72 0.18 48 / 0.3)" }}
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <GiShield
-                    size={20}
-                    className="text-accent group-hover:text-white transition-colors duration-500"
+                  <img
+                    src="/favicon.jpg"
+                    alt="Shield's Fitness Logo"
+                    className="w-full h-full object-cover scale-125 rounded-lg"
                   />
                 </div>
               </div>
@@ -386,7 +387,7 @@ export default function Navbar() {
                       boxShadow: "0 0 16px oklch(0.72 0.18 48 / 0.2)",
                     }}
                   >
-                    <GiShield size={20} style={{ color: "oklch(0.72 0.18 48)" }} />
+                    <img src="/favicon.jpg" alt="Logo" className="w-full h-full object-cover scale-125 rounded-xl" />
                   </div>
                   <div className="flex flex-col">
                     <span
