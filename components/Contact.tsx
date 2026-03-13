@@ -31,7 +31,7 @@ const INFO_CARDS = [
       "Gandhi Bazaar, Basavanagudi",
       "Bengaluru – 560004",
     ],
-    cta: { label: "Get Directions", href: "https://maps.google.com/?q=Basavanagudi+Bengaluru" },
+    cta: { label: "Get Directions", href: "https://maps.app.goo.gl/FGdUKxcSXiu8sJLy5?g_st=aw" },
   },
   {
     icon: FiPhone,
@@ -535,7 +535,7 @@ export default function Contact() {
               className="mt-4 rounded-2xl overflow-hidden border border-foreground/[0.05] h-52 sm:h-64"
             >
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.6050048988777!2d77.56899761480194!3d12.940985990884696!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae15a3f8a45495%3A0x5f5e1b4d3c8e4b8a!2sBasavanagudi%2C%20Bengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1709000000000!5m2!1sen!2sin"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.6050048988777!2d77.56899761480194!3d12.940985990884696!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae159992dbe9a1%3A0xb74bb517b9effe5c!2sSHIELD'S+FITNESS+CLUB!5e0!3m2!1sen!2sin!4v1709000000000!5m2!1sen!2sin"
                 width="100%"
                 height="100%"
                 style={{ border: 0, filter: "grayscale(1) contrast(1.1) opacity(0.8)" }}
