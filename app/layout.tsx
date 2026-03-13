@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Loader from "@/components/Loader";
 
 export const metadata: Metadata = {
   title: "Shield's Fitness Club Basavanagudi | Premium Gym in Bengaluru",
   description:
-    "Shield's Fitness Club in Basavanagudi, Bengaluru — rated 4.8⭐ with 287+ reviews. Modern equipment, certified trainers, strength & cardio training. Join today!",
+    "Shield's Fitness Club in Basavanagudi, Bengaluru - rated 4.8/5 with 287+ reviews. Modern equipment, certified trainers, strength & cardio training. Join today!",
   keywords: [
     "gym in Basavanagudi",
     "fitness club Bengaluru",
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
     siteName: "Shield's Fitness Club Basavanagudi",
     title: "Shield's Fitness Club Basavanagudi | Premium Gym in Bengaluru",
     description:
-      "Join Bengaluru's premier fitness destination. 4.8⭐ rated gym with modern equipment, certified trainers, and a motivating environment.",
+      "Join Bengaluru's premier fitness destination. 4.8/5 rated gym with modern equipment, certified trainers, and a motivating environment.",
     images: [
       {
         url: "/og-image.jpg",
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Shield's Fitness Club Basavanagudi | Premium Gym in Bengaluru",
     description:
-      "Join Bengaluru's premier fitness destination. 4.8⭐ rated gym with modern equipment and certified trainers.",
+      "Join Bengaluru's premier fitness destination. 4.8/5 rated gym with modern equipment and certified trainers.",
   },
   robots: {
     index: true,
@@ -109,7 +110,10 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <Loader />
+        {children}
+      </body>
     </html>
   );
 }

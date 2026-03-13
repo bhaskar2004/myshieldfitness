@@ -87,7 +87,7 @@ function FeaturePill({ text, index, triggered }: { text: string; index: number; 
       className="group flex items-center gap-2.5 py-2 px-3 rounded-sm border transition-all duration-300 cursor-default"
       style={{
         background: "var(--card)",
-        border: "1px solid oklch(0.12 0.026 40 / 0.07)",
+        border: "1px solid var(--foreground)",
       }}
       onMouseEnter={e => {
         (e.currentTarget as HTMLElement).style.borderColor = "oklch(0.72 0.18 48 / 0.3)";
@@ -100,7 +100,7 @@ function FeaturePill({ text, index, triggered }: { text: string; index: number; 
     >
       <span
         className="w-4 h-4 rounded-full flex items-center justify-center shrink-0 transition-colors duration-300"
-        style={{ background: "oklch(0.72 0.18 48 / 0.12)", border: "1px solid oklch(0.72 0.18 48 / 0.25)" }}
+        style={{ background: "oklch(0.72 0.18 48 / 0.12)", border: "1px solid var(--foreground)" }}
       >
         <FiCheck size={9} style={{ color: "var(--primary)" }} />
       </span>
@@ -134,7 +134,7 @@ function MilestoneCard({
       animate={triggered ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: 0.7 + index * 0.09, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       className="group relative text-center py-5 px-3 rounded-sm border transition-all duration-300 overflow-hidden cursor-default"
-      style={{ background: "var(--card)", border: "1px solid oklch(0.12 0.026 40 / 0.06)" }}
+      style={{ background: "var(--card)", border: "1px solid var(--foreground)" }}
       onMouseEnter={e => {
         (e.currentTarget as HTMLElement).style.borderColor = "oklch(0.72 0.18 48 / 0.22)";
         (e.currentTarget as HTMLElement).style.background = "oklch(0.72 0.18 48 / 0.04)";

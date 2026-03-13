@@ -4,12 +4,12 @@ import { motion } from "framer-motion";
 import { MdLocationOn } from "react-icons/md";
 import { GiMuscleUp, GiWeightLiftingUp } from "react-icons/gi";
 import { RiFlashlightLine } from "react-icons/ri";
-import { TbBarbell, TbYoga, TbRun, TbFlame, TbHeartbeat } from "react-icons/tb";
-import { FiAward, FiShield } from "react-icons/fi";
+import { TbBarbell, TbYoga, TbRun, TbFlame, TbHeartbeat, TbTrophy } from "react-icons/tb";
+import { FiAward, FiShield, FiUsers, FiTrendingUp, FiZap, FiStar } from "react-icons/fi";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
-const tickerRow1 = [
+export const tickerRow1 = [
   { icon: TbBarbell, label: "Strength Training" },
   { icon: TbRun, label: "Cardio Zone" },
   { icon: RiFlashlightLine, label: "HIIT Classes" },
@@ -20,7 +20,7 @@ const tickerRow1 = [
   { icon: MdLocationOn, label: "Basavanagudi" },
 ];
 
-const tickerRow2 = [
+export const tickerRow2 = [
   { icon: FiAward, label: "4.8 ★ Google Rating" },
   { icon: TbHeartbeat, label: "500+ Active Members" },
   { icon: FiShield, label: "Certified Trainers" },
@@ -31,9 +31,20 @@ const tickerRow2 = [
   { icon: RiFlashlightLine, label: "No Hidden Fees" },
 ];
 
+export const tickerRow3 = [
+  { label: "Strength Training", icon: TbBarbell },
+  { label: "HIIT Classes", icon: TbFlame },
+  { label: "Personal Training", icon: FiUsers },
+  { label: "Powerlifting", icon: TbBarbell },
+  { label: "Cardio Zone", icon: FiTrendingUp },
+  { label: "Nutrition Guidance", icon: FiZap },
+  { label: "Functional Fitness", icon: FiAward },
+  { label: "Yoga & Recovery", icon: FiStar },
+];
+
 // ─── Marquee Row ─────────────────────────────────────────────────────────────
 
-function MarqueeRow({
+export function MarqueeRow({
   items,
   reverse = false,
   speed = 35,
@@ -50,9 +61,9 @@ function MarqueeRow({
     <div
       className="overflow-hidden relative py-2.5"
       style={{
-        background: dark ? "var(--primary)" : "oklch(0.96 0.02 48 / 0.6)",
-        borderTop: dark ? "none" : "1px solid oklch(0.72 0.18 48 / 0.12)",
-        borderBottom: dark ? "none" : "1px solid oklch(0.72 0.18 48 / 0.12)",
+        background: dark ? "oklch(0.72 0.18 48)" : "oklch(0.96 0.02 48 / 0.6)",
+        borderTop: dark ? "none" : "1px solid var(--foreground)",
+        borderBottom: dark ? "none" : "1px solid var(--foreground)",
       }}
     >
       {/* Edge fades */}

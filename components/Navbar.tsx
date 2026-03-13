@@ -2,37 +2,18 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
-import { FiPhone, FiChevronRight, FiZap } from "react-icons/fi";
+import { FiPhone, FiChevronRight, FiZap, FiMapPin } from "react-icons/fi";
 import { FaInstagram } from "react-icons/fa";
 import { GiShield } from "react-icons/gi";
+import { TbBarbell } from "react-icons/tb";
 
-/* ─── Animated burger / X icon ─── */
-function BurgerIcon({ open }: { open: boolean }) {
-  return (
-    <div className="relative w-5 h-4 flex flex-col justify-between">
-      {/* Top bar */}
-      <motion.span
-        className="block h-[1.5px] rounded-full bg-current origin-center"
-        animate={open ? { rotate: 45, y: 7.5, width: "100%" } : { rotate: 0, y: 0, width: "100%" }}
-        transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
-      />
-      {/* Middle bar */}
-      <motion.span
-        className="block h-[1.5px] rounded-full bg-current origin-center"
-        animate={open ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
-        transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
-        style={{ width: "75%" }}
-      />
-      {/* Bottom bar */}
-      <motion.span
-        className="block h-[1.5px] rounded-full bg-current origin-center"
-        animate={open ? { rotate: -45, y: -7.5, width: "100%" } : { rotate: 0, y: 0, width: "100%" }}
-        transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
-      />
-    </div>
-  );
-}
+// ─── Color system ─────────────────────────────────────────────────────────────
+const ACCENT = "oklch(0.72 0.18 48)";
+const INDIGO = "oklch(0.50 0.150 280)";
+const aa = (a: number) => `oklch(0.72 0.18 48 / ${a})`;
+const ia = (a: number) => `oklch(0.50 0.150 280 / ${a})`;
 
+// ─── Nav links ────────────────────────────────────────────────────────────────
 const navLinks = [
   { label: "About", href: "#about" },
   { label: "Facilities", href: "#facilities" },
@@ -41,21 +22,104 @@ const navLinks = [
   { label: "Contact", href: "#contact" },
 ];
 
-/* ─── magnetic button with sliding pill ─── */
+// ─── BurgerIcon — SVG path morph for pixel-perfect X ─────────────────────────
+// Using SVG lets us drive both stroke-dashoffset and d-attribute for a crisp
+// hamburger ↔ X morph with no floating-point centering issues.
+function BurgerIcon({ open }: { open: boolean }) {
+  // viewBox 20×14, bars at y=0, y=6.25 (mid-center), y=12.5
+  // Open state: top bar rotates 45° through center, bottom rotates -45°
+  return (
+    <svg
+      width="20" height="14"
+      viewBox="0 0 20 14"
+      fill="none"
+      aria-hidden
+      style={{ overflow: "visible" }}
+    >
+      {/* ── Top bar ── */}
+      <motion.line
+        x1="0" y1="1" x2="20" y2="1"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        initial={{ y1: 1, y2: 1, x1: 0, x2: 20, rotate: 0 }}
+        animate={open
+          ? { y1: 7, y2: 7, x1: 1.5, x2: 18.5, rotate: 45 }
+          : { y1: 1, y2: 1, x1: 0, x2: 20, rotate: 0 }
+        }
+        style={{ transformOrigin: "10px 7px" }}
+        transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+      />
+
+      {/* ── Middle bar — shorter, fades out ── */}
+      <motion.line
+        x1="3" y1="7" x2="20" y2="7"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        initial={{ opacity: 1, scaleX: 1 }}
+        animate={open
+          ? { opacity: 0, scaleX: 0.4 }
+          : { opacity: 1, scaleX: 1 }
+        }
+        style={{ transformOrigin: "10px 7px" }}
+        transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
+      />
+
+      {/* ── Bottom bar ── */}
+      <motion.line
+        x1="0" y1="13" x2="20" y2="13"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        initial={{ y1: 13, y2: 13, x1: 0, x2: 20, rotate: 0 }}
+        animate={open
+          ? { y1: 7, y2: 7, x1: 1.5, x2: 18.5, rotate: -45 }
+          : { y1: 13, y2: 13, x1: 0, x2: 20, rotate: 0 }
+        }
+        style={{ transformOrigin: "10px 7px" }}
+        transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+      />
+    </svg>
+  );
+}
+
+// ─── Scroll progress bar ──────────────────────────────────────────────────────
+function ScrollProgress() {
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    const fn = () => {
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(total > 0 ? (window.scrollY / total) * 100 : 0);
+    };
+    window.addEventListener("scroll", fn, { passive: true });
+    return () => window.removeEventListener("scroll", fn);
+  }, []);
+
+  return (
+    <div className="absolute bottom-0 left-0 right-0 h-px" style={{ background: aa(0.06) }}>
+      <motion.div
+        className="h-full origin-left"
+        style={{
+          scaleX: progress / 100,
+          background: `linear-gradient(90deg, transparent, ${ACCENT}, ${INDIGO})`,
+          boxShadow: `0 0 12px ${aa(0.55)}`,
+        }}
+      />
+    </div>
+  );
+}
+
+// ─── Desktop NavLink with magnetic + sliding pill ─────────────────────────────
 function NavLink({
-  children,
-  href,
-  active,
-  onClick,
-  isHovered,
-  onHover,
+  children, href, active, onClick, isHovered, onHover,
 }: {
   children: React.ReactNode;
   href: string;
   active: boolean;
   onClick: () => void;
   isHovered: boolean;
-  onHover: (hovered: boolean) => void;
+  onHover: (v: boolean) => void;
 }) {
   const ref = useRef<HTMLButtonElement>(null);
   const x = useMotionValue(0);
@@ -64,97 +128,156 @@ function NavLink({
   const sy = useSpring(y, { stiffness: 200, damping: 22 });
 
   const onMove = (e: React.MouseEvent) => {
-    const rect = ref.current!.getBoundingClientRect();
-    const cx = e.clientX - rect.left - rect.width / 2;
-    const cy = e.clientY - rect.top - rect.height / 2;
-    x.set(cx * 0.35);
-    y.set(cy * 0.35);
+    const r = ref.current!.getBoundingClientRect();
+    x.set((e.clientX - r.left - r.width / 2) * 0.35);
+    y.set((e.clientY - r.top - r.height / 2) * 0.35);
   };
   const onLeave = () => { x.set(0); y.set(0); onHover(false); };
 
   return (
     <motion.button
       ref={ref}
-      style={{ x: sx, y: sy }}
       onMouseMove={onMove}
       onMouseEnter={() => onHover(true)}
       onMouseLeave={onLeave}
       onClick={onClick}
-      className={`relative px-5 py-2 text-[10px] font-black tracking-[3px] uppercase font-mono transition-colors duration-300 group ${active ? "text-white" : "text-text-lo hover:text-text-hi"
-        }`}
+      className="relative px-4 py-2 transition-colors duration-200"
+      style={{
+        x: sx,
+        y: sy,
+        fontFamily: "var(--font-mono)",
+        fontWeight: 700,
+        fontSize: "10px",
+        letterSpacing: "0.18em",
+        textTransform: "uppercase",
+        color: active ? "oklch(0.15 0.02 60)" : "var(--muted-foreground)",
+      } as any}
     >
-      {/* sliding pill background */}
       {(active || isHovered) && (
         <motion.span
           layoutId="nav-pill"
           className="absolute inset-0 rounded-full z-0"
           style={{
-            background: active ? "var(--primary)" : "oklch(0.12 0.026 40 / 0.04)",
-            boxShadow: active ? "0 8px 20px -6px oklch(0.72 0.18 48 / 0.4)" : "none"
+            background: active ? ACCENT : aa(0.06),
+            boxShadow: active ? `0 6px 18px -4px ${aa(0.42)}` : "none",
           }}
-          transition={{ type: "spring", stiffness: 400, damping: 30 }}
+          transition={{ type: "spring", stiffness: 420, damping: 30 }}
         />
       )}
-
       <span className="relative z-10">{children}</span>
     </motion.button>
   );
 }
 
-/* ─── scroll progress bar ─── */
-function ScrollProgress() {
-  const [progress, setProgress] = useState(0);
+// ─── Live status pill (time-aware) ────────────────────────────────────────────
+function LiveStatus({ compact = false }: { compact?: boolean }) {
+  const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
-    const onScroll = () => {
-      const total = document.documentElement.scrollHeight - window.innerHeight;
-      setProgress(total > 0 ? (window.scrollY / total) * 100 : 0);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const h = new Date().getHours();
+    setIsOpen(h >= 6 && h < 22);
   }, []);
+
+  const color = isOpen ? "oklch(0.65 0.17 155)" : "oklch(0.65 0.18 25)";
+  const label = isOpen ? "Open Now" : "Closed";
+  const sub = isOpen ? "Closes 10 PM" : "Opens 6 AM";
+
+  if (compact) {
+    return (
+      <div className="flex items-center gap-1.5">
+        <span className="relative flex items-center justify-center">
+          {isOpen && (
+            <span
+              className="absolute w-3 h-3 rounded-full animate-ping opacity-30"
+              style={{ background: color }}
+            />
+          )}
+          <span className="relative w-2 h-2 rounded-full" style={{ background: color }} />
+        </span>
+        <span style={{
+          fontFamily: "var(--font-mono)",
+          fontWeight: 700,
+          fontSize: "9px",
+          letterSpacing: "0.14em",
+          textTransform: "uppercase",
+          color,
+        }}>
+          {label}
+        </span>
+      </div>
+    );
+  }
+
   return (
-    <div className="absolute bottom-0 left-0 right-0 h-px bg-foreground/[0.03]">
-      <motion.div
-        className="h-full origin-left"
-        style={{
-          scaleX: progress / 100,
-          background: "linear-gradient(90deg, transparent, var(--primary), oklch(0.50 0.150 280))",
-          boxShadow: "0 0 15px oklch(0.72 0.18 48 / 0.6)",
-        }}
-      />
+    <div
+      className="flex items-center gap-3 px-4 py-3 rounded-xl"
+      style={{
+        background: isOpen ? "oklch(0.65 0.17 155 / 0.07)" : "oklch(0.65 0.18 25 / 0.07)",
+        border: `1px solid ${isOpen ? "oklch(0.65 0.17 155 / 0.22)" : "oklch(0.65 0.18 25 / 0.22)"}`,
+      }}
+    >
+      <span className="relative flex items-center justify-center flex-shrink-0">
+        {isOpen && (
+          <span className="absolute w-4 h-4 rounded-full animate-ping opacity-25" style={{ background: color }} />
+        )}
+        <span className="relative w-2.5 h-2.5 rounded-full" style={{ background: color, boxShadow: `0 0 8px ${color}` }} />
+      </span>
+      <div>
+        <p style={{
+          fontFamily: "var(--font-mono)",
+          fontWeight: 700,
+          fontSize: "10px",
+          letterSpacing: "0.16em",
+          textTransform: "uppercase",
+          lineHeight: 1,
+          color,
+        }}>
+          {label}
+        </p>
+        <p style={{
+          fontFamily: "var(--font-mono)",
+          fontWeight: 400,
+          fontSize: "9px",
+          letterSpacing: "0.08em",
+          lineHeight: 1,
+          marginTop: "4px",
+          color: "oklch(1 0 0 / 0.35)",
+        }}>
+          {sub} · 6AM daily
+        </p>
+      </div>
     </div>
   );
 }
 
-/* ══════════════ MAIN ══════════════ */
+// ─── Main ─────────────────────────────────────────────────────────────────────
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
-  const [hoveredSection, setHoveredSection] = useState<string | null>(null);
-  const [scrollY, setScrollY] = useState(0);
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
 
+  // Scroll detection
   useEffect(() => {
-    const onScroll = () => {
-      const sy = window.scrollY;
-      setScrollY(sy);
-      setScrolled(sy > 40);
-
-      // active section detection
-      const ids = navLinks.map((l) => l.href.slice(1));
-      for (const id of [...ids].reverse()) {
-        const el = document.getElementById(id);
-        if (el && sy >= el.offsetTop - 140) {
-          setActiveSection(id);
-          break;
-        }
-      }
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const fn = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", fn, { passive: true });
+    return () => window.removeEventListener("scroll", fn);
   }, []);
 
-  // lock body scroll when mobile menu open
+  // Active section via IntersectionObserver
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) setActiveSection(e.target.id); });
+      },
+      { rootMargin: "-15% 0px -75% 0px", threshold: 0 }
+    );
+    navLinks
+      .map((l) => document.getElementById(l.href.slice(1)))
+      .forEach((el) => el && obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+
+  // Lock body scroll when drawer open
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -162,88 +285,104 @@ export default function Navbar() {
 
   const scrollTo = (href: string) => {
     setMobileOpen(false);
-    const el = document.querySelector(href);
-    if (el) window.scrollTo({ top: (el as HTMLElement).offsetTop - 76, behavior: "smooth" });
+    const el = document.querySelector(href) as HTMLElement | null;
+    if (el) window.scrollTo({ top: el.offsetTop - 76, behavior: "smooth" });
   };
 
   return (
     <>
       {/* ══ NAVBAR ══ */}
       <motion.nav
-        initial={{ y: -100, opacity: 0 }}
+        initial={{ y: -88, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         className="fixed top-0 left-0 right-0 z-50"
       >
-        {/* glass bg panel */}
+        {/* Glass panel */}
         <div
-          className="absolute inset-0 transition-all duration-700"
+          className="absolute inset-0 transition-all duration-600"
           style={{
-            background: scrolled
-              ? "oklch(0.975 0.016 72 / 0.8)"
-              : "transparent",
-            backdropFilter: scrolled ? "blur(24px) saturate(180%)" : "none",
-            borderBottom: scrolled ? "1px solid oklch(0.72 0.18 48 / 0.08)" : "1px solid oklch(0.12 0.026 40 / 0.03)",
+            background: scrolled ? "var(--background)" : "transparent",
+            backdropFilter: scrolled ? "blur(22px) saturate(170%)" : "none",
+            WebkitBackdropFilter: scrolled ? "blur(22px) saturate(170%)" : "none",
+            borderBottom: scrolled ? `1px solid ${aa(0.10)}` : "1px solid transparent",
+            opacity: scrolled ? 0.92 : 1,
           }}
         />
-        {/* top accent line */}
-        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-foreground/[0.04] to-transparent" />
-
-        {/* scroll progress */}
+        {/* Scroll progress */}
         {scrolled && <ScrollProgress />}
 
         <div className="relative w-full px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 lg:h-[72px]">
+          <div className="flex items-center justify-between h-16 lg:h-[72px] max-w-7xl mx-auto">
 
             {/* ── Logo ── */}
             <motion.a
               href="#"
               onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-              className="flex items-center gap-3.5 group shrink-0"
+              className="flex items-center gap-3 group flex-shrink-0"
               whileHover={{ scale: 1.02 }}
             >
-              {/* icon */}
-              <div className="relative w-10 h-10 shrink-0">
+              <div className="relative w-9 h-9 sm:w-10 sm:h-10 flex-shrink-0">
                 <div
-                  className="absolute inset-0 rounded-lg transition-all duration-500 group-hover:opacity-100 opacity-0"
-                  style={{ background: "var(--primary)", boxShadow: "0 0 30px oklch(0.72 0.18 48 / 0.4)" }}
+                  className="absolute inset-0 rounded-xl transition-all duration-400 group-hover:opacity-100 opacity-0"
+                  style={{ background: ACCENT, boxShadow: `0 0 24px ${aa(0.45)}` }}
                 />
                 <div
-                  className="absolute inset-0 rounded-lg transition-all duration-500 group-hover:opacity-0"
-                  style={{ background: "oklch(0.72 0.18 48 / 0.1)", border: "1px solid oklch(0.72 0.18 48 / 0.3)" }}
+                  className="absolute inset-0 rounded-xl transition-all duration-400 group-hover:opacity-0"
+                  style={{ background: aa(0.08), border: `1px solid ${aa(0.22)}` }}
                 />
-                <div className="absolute inset-0 flex items-center justify-center">
+                <div className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-xl">
                   <img
                     src="/favicon.jpg"
-                    alt="Shield's Fitness Logo"
-                    className="w-full h-full object-cover scale-125 rounded-lg"
+                    alt="Shield's Fitness"
+                    className="w-full h-full object-cover"
+                    style={{ transform: "scale(1.15)" }}
                   />
                 </div>
               </div>
 
-              {/* wordmark */}
-              <div className="flex flex-col">
-                <span className="font-display font-black text-[18px] sm:text-[22px] leading-tight tracking-[0.05em] text-text-hi">
+              <div className="flex flex-col leading-none">
+                <span style={{
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 900,
+                  fontStyle: "italic",
+                  fontSize: "clamp(16px, 3.5vw, 22px)",
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                  color: "var(--foreground)",
+                  lineHeight: 1,
+                }}>
                   SHIELD&apos;S
                 </span>
-                <div className="flex items-center gap-2 mt-0.5">
-                  <div className="w-1 h-[1px] sm:w-1.5 sm:h-[1.5px] bg-accent" />
-                  <span className="text-text-lo text-[7px] sm:text-[9px] tracking-[0.35em] uppercase font-mono font-black">
-                    FITNESS
+                <div className="flex items-center gap-1.5 mt-1">
+                  <div className="h-px w-4" style={{ background: ACCENT }} />
+                  <span style={{
+                    fontFamily: "var(--font-mono)",
+                    fontWeight: 700,
+                    fontSize: "8px",
+                    letterSpacing: "0.28em",
+                    textTransform: "uppercase",
+                    color: "var(--muted-foreground)",
+                    lineHeight: 1,
+                  }}>
+                    Fitness
                   </span>
                 </div>
               </div>
             </motion.a>
 
-            {/* ── Desktop nav links ── */}
-            <div className="hidden lg:flex items-center bg-foreground/[0.03] border border-foreground/[0.05] rounded-full p-1 lg:mx-8">
+            {/* ── Desktop nav ── */}
+            <div
+              className="hidden lg:flex items-center rounded-full p-1 mx-6"
+              style={{ background: aa(0.04), border: `1px solid ${aa(0.10)}` }}
+            >
               {navLinks.map((link) => (
                 <NavLink
                   key={link.href}
                   href={link.href}
                   active={activeSection === link.href.slice(1)}
-                  isHovered={hoveredSection === link.href}
-                  onHover={(h) => setHoveredSection(h ? link.href : null)}
+                  isHovered={hoveredLink === link.href}
+                  onHover={(h) => setHoveredLink(h ? link.href : null)}
                   onClick={() => scrollTo(link.href)}
                 >
                   {link.label}
@@ -251,70 +390,104 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* ── Desktop right actions ── */}
-            <div className="hidden lg:flex items-center gap-4 shrink-0 pl-6 border-l border-foreground/[0.06] ml-4">
-              <div className="flex items-center gap-2">
-                {/* Instagram */}
-                <motion.a
-                  href="https://www.instagram.com/shields_basavanagudi/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-9 h-9 flex items-center justify-center text-text-lo hover:text-text-hi transition-all duration-300 rounded-lg bg-foreground/[0.03] border border-foreground/[0.05] hover:bg-foreground/[0.08]"
-                  whileHover={{ scale: 1.05, y: -1 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <FaInstagram size={16} />
-                </motion.a>
+            {/* ── Desktop right ── */}
+            <div
+              className="hidden lg:flex items-center gap-3 flex-shrink-0 pl-5"
+              style={{ borderLeft: `1px solid ${aa(0.12)}` }}
+            >
+              <motion.a
+                href="https://www.instagram.com/shields_basavanagudi/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="w-9 h-9 flex items-center justify-center rounded-lg transition-colors duration-250"
+                style={{
+                  background: aa(0.06),
+                  border: `1px solid ${aa(0.14)}`,
+                  color: "var(--muted-foreground)",
+                }}
+                whileHover={{ scale: 1.06, y: -1 }}
+                whileTap={{ scale: 0.94 }}
+              >
+                <FaInstagram size={15} />
+              </motion.a>
 
-                {/* Phone */}
-                <motion.a
-                  href="tel:9019342121"
-                  className="h-9 flex items-center gap-2.5 px-3.5 rounded-lg bg-foreground/[0.03] border border-foreground/[0.05] text-text-lo hover:text-text-hi text-[10px] font-mono font-black tracking-widest transition-all duration-300"
-                  whileHover={{ scale: 1.02, y: -1 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <FiPhone size={12} className="text-accent" />
-                  9019342121
-                </motion.a>
-              </div>
+              <motion.a
+                href="tel:9019342121"
+                className="h-9 flex items-center gap-2 px-3 rounded-lg transition-colors duration-250"
+                style={{
+                  background: aa(0.06),
+                  border: `1px solid ${aa(0.14)}`,
+                  color: "var(--muted-foreground)",
+                  fontFamily: "var(--font-mono)",
+                  fontWeight: 600,
+                  fontSize: "10px",
+                  letterSpacing: "0.08em",
+                  textDecoration: "none",
+                }}
+                whileHover={{ scale: 1.02, y: -1 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <FiPhone size={11} style={{ color: ACCENT, flexShrink: 0 }} />
+                9019342121
+              </motion.a>
 
-              {/* CTA */}
               <motion.button
                 onClick={() => scrollTo("#membership")}
-                className="relative group overflow-hidden flex items-center gap-2 px-6 py-3 text-white text-[10px] font-black tracking-[3.2px] uppercase font-mono rounded-lg"
-                style={{ background: "var(--primary)", boxShadow: "0 8px 25px -8px oklch(0.72 0.18 48 / 0.4)" }}
+                className="relative overflow-hidden flex items-center gap-2 px-5 py-2.5 rounded-lg"
+                style={{
+                  background: ACCENT,
+                  color: "oklch(0.15 0.02 60)",
+                  fontFamily: "var(--font-mono)",
+                  fontWeight: 800,
+                  fontSize: "10px",
+                  letterSpacing: "0.22em",
+                  textTransform: "uppercase",
+                  boxShadow: `0 6px 22px -6px ${aa(0.48)}`,
+                  border: "none",
+                  cursor: "pointer",
+                }}
                 whileHover={{ scale: 1.04, y: -1 }}
                 whileTap={{ scale: 0.96 }}
               >
-                {/* scanning beam */}
                 <motion.div
-                  className="absolute top-0 left-0 w-[30px] h-full bg-white/20 skew-x-[25deg] -translate-x-[200%]"
-                  animate={{ translateX: ["-200%", "500%"] }}
-                  transition={{ duration: 0.8, repeat: Infinity, repeatDelay: 4 }}
+                  className="absolute top-0 left-0 w-8 h-full"
+                  style={{ background: "oklch(1 0 0 / 0.20)", transform: "skewX(-25deg)" }}
+                  animate={{ x: ["-200%", "500%"] }}
+                  transition={{ duration: 0.85, repeat: Infinity, repeatDelay: 4.2 }}
                 />
-                <FiZap size={13} className="relative z-10" />
+                <FiZap size={12} className="relative z-10 flex-shrink-0" />
                 <span className="relative z-10">Join Elite</span>
               </motion.button>
             </div>
 
-            {/* ── Mobile hamburger ── */}
-            <motion.button
-              className="lg:hidden relative flex items-center justify-center transition-colors"
-              onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label="Toggle menu"
-              whileTap={{ scale: 0.88 }}
-              style={{
-                width: 44,
-                height: 44,
-                borderRadius: "0.625rem",
-                background: mobileOpen ? "oklch(0.72 0.18 48 / 0.12)" : "oklch(0.12 0.026 40 / 0.05)",
-                border: mobileOpen ? "1px solid oklch(0.72 0.18 48 / 0.3)" : "1px solid oklch(0.12 0.026 40 / 0.08)",
-                color: mobileOpen ? "oklch(0.72 0.18 48)" : "var(--foreground)",
-                transition: "background 0.25s ease, border-color 0.25s ease, color 0.25s ease",
-              }}
-            >
-              <BurgerIcon open={mobileOpen} />
-            </motion.button>
+            {/* ── Mobile: status + hamburger ── */}
+            <div className="flex lg:hidden items-center gap-2.5">
+              {/* Live status — compact, visible at a glance */}
+              <div className="hidden sm:block">
+                <LiveStatus compact />
+              </div>
+
+              {/* Burger button */}
+              <motion.button
+                onClick={() => setMobileOpen(!mobileOpen)}
+                aria-label={mobileOpen ? "Close menu" : "Open menu"}
+                aria-expanded={mobileOpen}
+                whileTap={{ scale: 0.88 }}
+                className="flex items-center justify-center flex-shrink-0 transition-all duration-250"
+                style={{
+                  width: 44,
+                  height: 44,
+                  borderRadius: "10px",
+                  background: mobileOpen ? aa(0.12) : aa(0.06),
+                  border: `1.5px solid ${mobileOpen ? aa(0.35) : aa(0.16)}`,
+                  color: mobileOpen ? ACCENT : "var(--foreground)",
+                  transition: "background 0.25s ease, border-color 0.25s ease, color 0.25s ease",
+                }}
+              >
+                <BurgerIcon open={mobileOpen} />
+              </motion.button>
+            </div>
           </div>
         </div>
       </motion.nav>
@@ -323,184 +496,191 @@ export default function Navbar() {
       <AnimatePresence>
         {mobileOpen && (
           <>
-            {/* Blurred backdrop */}
+            {/* Backdrop */}
             <motion.div
               key="backdrop"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="fixed inset-0 z-40 backdrop-blur-[6px]"
-              style={{ background: "oklch(0.08 0.018 40 / 0.75)" }}
+              transition={{ duration: 0.28 }}
+              className="fixed inset-0 z-40"
+              style={{ background: "oklch(0.06 0.015 40 / 0.72)", backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)" }}
               onClick={() => setMobileOpen(false)}
             />
 
             {/* Drawer panel */}
             <motion.div
               key="drawer"
-              initial={{ x: "100%", opacity: 0 }}
+              initial={{ x: "100%", opacity: 0.6 }}
               animate={{ x: 0, opacity: 1 }}
-              exit={{ x: "100%", opacity: 0 }}
-              transition={{ type: "spring", stiffness: 340, damping: 36 }}
-              className="fixed top-0 right-0 bottom-0 z-50 flex flex-col overflow-hidden"
+              exit={{ x: "100%", opacity: 0.6 }}
+              transition={{ type: "spring", stiffness: 360, damping: 38 }}
+              className="fixed top-0 right-0 bottom-0 z-50 flex flex-col"
               style={{
-                width: "min(88vw, 380px)",
-                background: "linear-gradient(160deg, oklch(0.11 0.022 40) 0%, oklch(0.08 0.016 40) 100%)",
-                borderLeft: "1px solid oklch(0.72 0.18 48 / 0.15)",
+                width: "min(85vw, 360px)",
+                background: "oklch(0.10 0.020 42)",
+                borderLeft: `1px solid ${aa(0.18)}`,
+                boxShadow: `-24px 0 80px oklch(0 0 0 / 0.40)`,
               }}
             >
-              {/* Top accent glow bar */}
-              <div
-                className="h-[2px] w-full flex-shrink-0"
-                style={{ background: "linear-gradient(90deg, transparent, oklch(0.72 0.18 48), oklch(0.60 0.140 85), transparent)" }}
-              />
+              {/* Top accent bar */}
+              <div className="flex-shrink-0 h-[2px]" style={{
+                background: `linear-gradient(90deg, transparent, ${ACCENT} 35%, ${INDIGO} 65%, transparent)`,
+              }} />
 
-              {/* Subtle grid texture */}
-              <div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  backgroundImage: `linear-gradient(oklch(0.72 0.18 48 / 0.04) 1px, transparent 1px), linear-gradient(90deg, oklch(0.72 0.18 48 / 0.04) 1px, transparent 1px)`,
-                  backgroundSize: "44px 44px",
-                }}
-              />
+              {/* Subtle grid */}
+              <div className="absolute inset-0 pointer-events-none" style={{
+                backgroundImage: `linear-gradient(${aa(0.04)} 1px, transparent 1px), linear-gradient(90deg, ${aa(0.04)} 1px, transparent 1px)`,
+                backgroundSize: "52px 52px",
+              }} />
 
-              {/* Ambient glow orb */}
-              <div
-                className="absolute top-[-80px] right-[-60px] w-[280px] h-[280px] rounded-full pointer-events-none"
-                style={{
-                  background: "radial-gradient(circle, oklch(0.72 0.18 48 / 0.15), transparent 70%)",
-                  filter: "blur(40px)",
-                }}
-              />
+              {/* Glow orb */}
+              <div className="absolute top-[-60px] right-[-40px] w-[260px] h-[260px] rounded-full pointer-events-none" style={{
+                background: `radial-gradient(circle, ${aa(0.14)} 0%, transparent 68%)`,
+                filter: "blur(36px)",
+              }} />
 
-              {/* ── Header ── */}
+              {/* ── Drawer header ── */}
               <div
-                className="relative flex items-center justify-between px-6 py-5 flex-shrink-0"
-                style={{ borderBottom: "1px solid oklch(1 0 0 / 0.06)" }}
+                className="relative flex items-center justify-between px-5 py-4 flex-shrink-0"
+                style={{ borderBottom: `1px solid ${aa(0.12)}` }}
               >
+                {/* Logo */}
                 <div className="flex items-center gap-3">
                   <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center"
-                    style={{
-                      background: "oklch(0.72 0.18 48 / 0.15)",
-                      border: "1px solid oklch(0.72 0.18 48 / 0.3)",
-                      boxShadow: "0 0 16px oklch(0.72 0.18 48 / 0.2)",
-                    }}
+                    className="w-10 h-10 rounded-xl flex-shrink-0 overflow-hidden"
+                    style={{ border: `1px solid ${aa(0.22)}`, background: aa(0.10) }}
                   >
-                    <img src="/favicon.jpg" alt="Logo" className="w-full h-full object-cover scale-125 rounded-xl" />
+                    <img src="/favicon.jpg" alt="Shield's Fitness" className="w-full h-full object-cover scale-110" />
                   </div>
-                  <div className="flex flex-col">
-                    <span
-                      className="font-display font-black italic leading-none tracking-wider"
-                      style={{ fontSize: "1.05rem", color: "oklch(1 0 0 / 0.92)" }}
-                    >
+                  <div>
+                    <p style={{
+                      fontFamily: "var(--font-display)",
+                      fontWeight: 900,
+                      fontStyle: "italic",
+                      fontSize: "17px",
+                      letterSpacing: "0.08em",
+                      textTransform: "uppercase",
+                      color: "oklch(0.96 0.012 72)",
+                      lineHeight: 1,
+                    }}>
                       SHIELD&apos;S
-                    </span>
-                    <span
-                      className="font-mono font-black text-[8px] tracking-[4px] uppercase mt-0.5"
-                      style={{ color: "oklch(1 0 0 / 0.35)" }}
-                    >
+                    </p>
+                    <p style={{
+                      fontFamily: "var(--font-mono)",
+                      fontWeight: 500,
+                      fontSize: "8px",
+                      letterSpacing: "0.22em",
+                      textTransform: "uppercase",
+                      color: "oklch(1 0 0 / 0.35)",
+                      lineHeight: 1,
+                      marginTop: "4px",
+                    }}>
                       Basavanagudi
-                    </span>
+                    </p>
                   </div>
                 </div>
 
-                {/* Close button */}
+                {/* Close — X button, same 44×44 tap target */}
                 <motion.button
                   onClick={() => setMobileOpen(false)}
-                  whileTap={{ scale: 0.88 }}
-                  className="relative flex items-center justify-center"
+                  aria-label="Close menu"
+                  whileTap={{ scale: 0.86 }}
+                  className="flex items-center justify-center flex-shrink-0 transition-all duration-200"
                   style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: "0.625rem",
-                    background: "oklch(1 0 0 / 0.05)",
-                    border: "1px solid oklch(1 0 0 / 0.08)",
-                    color: "oklch(1 0 0 / 0.5)",
+                    width: 44,
+                    height: 44,
+                    borderRadius: "10px",
+                    background: aa(0.08),
+                    border: `1.5px solid ${aa(0.22)}`,
+                    color: "oklch(1 0 0 / 0.55)",
                   }}
                 >
-                  <BurgerIcon open={true} />
+                  {/* Inline X — always open state */}
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
+                    <motion.line x1="1.5" y1="1.5" x2="12.5" y2="12.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                    <motion.line x1="12.5" y1="1.5" x2="1.5" y2="12.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                  </svg>
                 </motion.button>
               </div>
 
               {/* ── Live status ── */}
-              <div className="relative px-6 pt-5">
-                <div
-                  className="flex items-center gap-3 px-4 py-3 rounded-xl"
-                  style={{
-                    background: "oklch(0.55 0.15 155 / 0.06)",
-                    border: "1px solid oklch(0.55 0.15 155 / 0.15)",
-                  }}
-                >
-                  <div className="relative flex items-center justify-center flex-shrink-0">
-                    <div className="absolute w-3 h-3 rounded-full animate-ping" style={{ background: "oklch(0.74 0.19 145 / 0.5)" }} />
-                    <div className="relative w-2 h-2 rounded-full" style={{ background: "oklch(0.74 0.19 145)", boxShadow: "0 0 8px oklch(0.74 0.19 145 / 0.8)" }} />
-                  </div>
-                  <div>
-                    <p className="font-mono font-black text-[9px] tracking-[3px] uppercase leading-none" style={{ color: "oklch(0.74 0.19 145)" }}>Gym Is Open</p>
-                    <p className="font-mono text-[8px] mt-0.5 tracking-widest" style={{ color: "oklch(1 0 0 / 0.3)" }}>Open until 10:00 PM · 6AM daily</p>
-                  </div>
-                </div>
+              <div className="relative px-5 pt-4 flex-shrink-0">
+                <LiveStatus compact={false} />
               </div>
 
               {/* ── Nav links ── */}
-              <nav className="relative flex-1 overflow-y-auto px-4 py-6">
+              <nav className="relative flex-1 overflow-y-auto px-4 pt-4 pb-2" aria-label="Mobile navigation">
                 {navLinks.map((link, i) => {
                   const isActive = activeSection === link.href.slice(1);
                   return (
                     <motion.button
                       key={link.href}
-                      initial={{ opacity: 0, x: 28 }}
+                      initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.08 + i * 0.06, ease: [0.16, 1, 0.3, 1], duration: 0.4 }}
+                      transition={{ delay: 0.06 + i * 0.055, duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
                       onClick={() => scrollTo(link.href)}
-                      className="group relative w-full flex items-center justify-between px-4 py-3.5 mb-1 text-left overflow-hidden"
+                      className="group relative w-full flex items-center justify-between mb-1 text-left overflow-hidden"
                       style={{
-                        borderRadius: "0.75rem",
-                        background: isActive ? "oklch(0.72 0.18 48 / 0.12)" : "transparent",
-                        border: isActive
-                          ? "1px solid oklch(0.72 0.18 48 / 0.28)"
-                          : "1px solid transparent",
-                        transition: "background 0.25s ease, border-color 0.25s ease",
+                        // 56px min touch target
+                        minHeight: "56px",
+                        padding: "0 16px",
+                        borderRadius: "12px",
+                        background: isActive ? aa(0.12) : "transparent",
+                        border: `1px solid ${isActive ? aa(0.28) : "transparent"}`,
+                        cursor: "pointer",
+                        transition: "background 0.22s ease, border-color 0.22s ease",
                       }}
-                      onMouseEnter={e => {
+                      onMouseEnter={(e) => {
                         if (!isActive) {
                           (e.currentTarget as HTMLElement).style.background = "oklch(1 0 0 / 0.04)";
-                          (e.currentTarget as HTMLElement).style.borderColor = "oklch(1 0 0 / 0.06)";
+                          (e.currentTarget as HTMLElement).style.borderColor = "oklch(1 0 0 / 0.07)";
                         }
                       }}
-                      onMouseLeave={e => {
+                      onMouseLeave={(e) => {
                         if (!isActive) {
                           (e.currentTarget as HTMLElement).style.background = "transparent";
                           (e.currentTarget as HTMLElement).style.borderColor = "transparent";
                         }
                       }}
                     >
-                      {/* Active left bar */}
+                      {/* Active left accent bar */}
                       {isActive && (
                         <motion.div
-                          layoutId="mobile-active-bar"
-                          className="absolute left-0 top-3 bottom-3 w-[2.5px] rounded-full"
-                          style={{ background: "oklch(0.72 0.18 48)" }}
+                          layoutId="mobile-active-indicator"
+                          className="absolute left-0 top-3 bottom-3 rounded-r-full"
+                          style={{ width: "2.5px", background: ACCENT }}
                           transition={{ type: "spring", stiffness: 380, damping: 30 }}
                         />
                       )}
 
-                      <div className="flex items-center gap-4 pl-1">
-                        <span
-                          className="font-mono text-[9px] font-black w-5 flex-shrink-0 tabular-nums"
-                          style={{ color: isActive ? "oklch(0.72 0.18 48)" : "oklch(1 0 0 / 0.2)" }}
-                        >
+                      <div className="flex items-center gap-4">
+                        {/* Index */}
+                        <span style={{
+                          fontFamily: "var(--font-mono)",
+                          fontWeight: 500,
+                          fontSize: "9px",
+                          letterSpacing: "0.12em",
+                          color: isActive ? aa(0.8) : "oklch(1 0 0 / 0.22)",
+                          minWidth: "18px",
+                          lineHeight: 1,
+                          fontVariantNumeric: "tabular-nums",
+                        }}>
                           0{i + 1}
                         </span>
-                        <span
-                          className="font-display font-black italic transition-colors duration-200"
-                          style={{
-                            fontSize: "clamp(1.2rem, 5vw, 1.5rem)",
-                            letterSpacing: "0.04em",
-                            color: isActive ? "oklch(0.72 0.18 48)" : "oklch(1 0 0 / 0.72)",
-                          }}
-                        >
+
+                        {/* Label */}
+                        <span style={{
+                          fontFamily: "var(--font-display)",
+                          fontWeight: 900,
+                          fontStyle: "italic",
+                          textTransform: "uppercase",
+                          fontSize: "clamp(1.2rem, 5.5vw, 1.45rem)",
+                          letterSpacing: "0.04em",
+                          lineHeight: 1,
+                          color: isActive ? ACCENT : "oklch(1 0 0 / 0.75)",
+                          transition: "color 0.2s ease",
+                        }}>
                           {link.label}
                         </span>
                       </div>
@@ -508,47 +688,55 @@ export default function Navbar() {
                       <FiChevronRight
                         size={14}
                         style={{
-                          color: isActive ? "oklch(0.72 0.18 48)" : "oklch(1 0 0 / 0.2)",
-                          transform: "translateX(0)",
+                          color: isActive ? ACCENT : "oklch(1 0 0 / 0.22)",
+                          flexShrink: 0,
                           transition: "transform 0.2s ease, color 0.2s ease",
                         }}
-                        className="group-hover:translate-x-1"
+                        className="group-hover:translate-x-0.5"
                       />
                     </motion.button>
                   );
                 })}
               </nav>
 
-              {/* ── Footer ── */}
+              {/* ── Footer actions ── */}
               <motion.div
-                initial={{ opacity: 0, y: 16 }}
+                initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.55 }}
-                className="relative flex-shrink-0 px-5 pt-4 pb-7"
-                style={{ borderTop: "1px solid oklch(1 0 0 / 0.07)" }}
+                transition={{ delay: 0.44, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                className="relative flex-shrink-0 px-4 pt-4 pb-6"
+                style={{ borderTop: `1px solid ${aa(0.12)}` }}
               >
-                {/* Quick actions row */}
-                <div className="flex gap-2.5 mb-3">
+                {/* Row 1: Call + Instagram — equal-weight secondary actions */}
+                <div className="flex gap-2 mb-2.5">
                   <motion.a
                     href="tel:9019342121"
                     whileTap={{ scale: 0.96 }}
-                    className="flex-1 h-11 flex items-center justify-center gap-2 font-mono font-black text-[9px] tracking-widest uppercase transition-all duration-200"
+                    className="flex-1 flex items-center justify-center gap-2"
                     style={{
-                      borderRadius: "0.625rem",
-                      background: "oklch(1 0 0 / 0.05)",
-                      border: "1px solid oklch(1 0 0 / 0.08)",
-                      color: "oklch(1 0 0 / 0.55)",
+                      height: "48px",
+                      borderRadius: "10px",
+                      background: aa(0.08),
+                      border: `1px solid ${aa(0.20)}`,
+                      color: "oklch(1 0 0 / 0.65)",
+                      fontFamily: "var(--font-mono)",
+                      fontWeight: 600,
+                      fontSize: "10px",
+                      letterSpacing: "0.12em",
+                      textTransform: "uppercase",
+                      textDecoration: "none",
+                      transition: "background 0.2s, border-color 0.2s",
                     }}
-                    onMouseEnter={e => {
-                      (e.currentTarget as HTMLElement).style.background = "oklch(1 0 0 / 0.08)";
-                      (e.currentTarget as HTMLElement).style.color = "oklch(1 0 0 / 0.85)";
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLElement).style.background = aa(0.14);
+                      (e.currentTarget as HTMLElement).style.borderColor = aa(0.35);
                     }}
-                    onMouseLeave={e => {
-                      (e.currentTarget as HTMLElement).style.background = "oklch(1 0 0 / 0.05)";
-                      (e.currentTarget as HTMLElement).style.color = "oklch(1 0 0 / 0.55)";
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLElement).style.background = aa(0.08);
+                      (e.currentTarget as HTMLElement).style.borderColor = aa(0.20);
                     }}
                   >
-                    <FiPhone size={13} style={{ color: "oklch(0.72 0.18 48)" }} />
+                    <FiPhone size={13} style={{ color: ACCENT, flexShrink: 0 }} />
                     Call Us
                   </motion.a>
 
@@ -556,56 +744,80 @@ export default function Navbar() {
                     href="https://www.instagram.com/shields_basavanagudi/"
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label="Instagram"
                     whileTap={{ scale: 0.96 }}
-                    className="w-11 h-11 flex items-center justify-center transition-all duration-200"
+                    className="flex items-center justify-center"
                     style={{
-                      borderRadius: "0.625rem",
-                      background: "oklch(1 0 0 / 0.05)",
-                      border: "1px solid oklch(1 0 0 / 0.08)",
-                      color: "oklch(1 0 0 / 0.5)",
+                      width: "48px",
+                      height: "48px",
+                      borderRadius: "10px",
+                      background: aa(0.08),
+                      border: `1px solid ${aa(0.20)}`,
+                      color: "oklch(1 0 0 / 0.55)",
+                      textDecoration: "none",
+                      flexShrink: 0,
+                      transition: "background 0.2s, border-color 0.2s, color 0.2s",
                     }}
-                    onMouseEnter={e => {
-                      (e.currentTarget as HTMLElement).style.background = "oklch(0.60 0.18 0 / 0.1)";
-                      (e.currentTarget as HTMLElement).style.color = "oklch(0.75 0.18 0)";
+                    onMouseEnter={(e) => {
+                      const el = e.currentTarget as HTMLElement;
+                      el.style.background = "oklch(0.62 0.18 0 / 0.12)";
+                      el.style.borderColor = "oklch(0.65 0.16 8 / 0.40)";
+                      el.style.color = "oklch(0.78 0.16 8)";
                     }}
-                    onMouseLeave={e => {
-                      (e.currentTarget as HTMLElement).style.background = "oklch(1 0 0 / 0.05)";
-                      (e.currentTarget as HTMLElement).style.color = "oklch(1 0 0 / 0.5)";
+                    onMouseLeave={(e) => {
+                      const el = e.currentTarget as HTMLElement;
+                      el.style.background = aa(0.08);
+                      el.style.borderColor = aa(0.20);
+                      el.style.color = "oklch(1 0 0 / 0.55)";
                     }}
                   >
                     <FaInstagram size={17} />
                   </motion.a>
                 </div>
 
-                {/* Primary CTA */}
+                {/* Row 2: Primary CTA — full width, dominant */}
                 <motion.button
                   onClick={() => scrollTo("#membership")}
                   whileTap={{ scale: 0.97 }}
-                  className="relative overflow-hidden w-full h-13 flex items-center justify-center gap-2.5 font-mono font-black text-[11px] tracking-[4px] uppercase"
+                  className="relative overflow-hidden w-full flex items-center justify-center gap-2.5"
                   style={{
-                    background: "var(--primary)",
-                    color: "var(--primary-foreground)",
-                    borderRadius: "0.75rem",
-                    boxShadow: "0 8px 28px oklch(0.72 0.18 48 / 0.35)",
-                    height: "3.25rem",
+                    height: "52px",
+                    borderRadius: "12px",
+                    background: ACCENT,
+                    color: "oklch(0.15 0.02 60)",
+                    fontFamily: "var(--font-mono)",
+                    fontWeight: 800,
+                    fontSize: "11px",
+                    letterSpacing: "0.22em",
+                    textTransform: "uppercase",
+                    border: "none",
+                    cursor: "pointer",
+                    boxShadow: `0 8px 28px -6px ${aa(0.50)}`,
                   }}
                 >
-                  {/* shimmer sweep */}
                   <motion.div
-                    className="absolute top-0 left-0 w-10 h-full skew-x-[25deg] -translate-x-full"
-                    style={{ background: "oklch(1 0 0 / 0.18)" }}
-                    animate={{ x: ["-120%", "420%"] }}
-                    transition={{ duration: 0.9, repeat: Infinity, repeatDelay: 3.5 }}
+                    className="absolute top-0 left-0 w-10 h-full"
+                    style={{ background: "oklch(1 0 0 / 0.18)", transform: "skewX(-22deg)" }}
+                    animate={{ x: ["-160%", "460%"] }}
+                    transition={{ duration: 0.88, repeat: Infinity, repeatDelay: 3.6 }}
                   />
-                  <FiZap size={15} className="relative z-10" />
+                  <FiZap size={15} className="relative z-10 flex-shrink-0" />
                   <span className="relative z-10">Join Elite</span>
                 </motion.button>
 
-                <p
-                  className="font-mono text-center text-[8px] tracking-[3px] uppercase mt-4"
-                  style={{ color: "oklch(1 0 0 / 0.22)" }}
-                >
-                  Open Daily &middot; 6:00 AM – 10:00 PM
+                {/* Hours note */}
+                <p style={{
+                  fontFamily: "var(--font-mono)",
+                  fontWeight: 400,
+                  fontSize: "8.5px",
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  textAlign: "center",
+                  color: "oklch(1 0 0 / 0.22)",
+                  marginTop: "12px",
+                  lineHeight: 1,
+                }}>
+                  Open Daily · 6:00 AM – 10:00 PM
                 </p>
               </motion.div>
             </motion.div>

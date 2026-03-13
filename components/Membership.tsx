@@ -270,7 +270,7 @@ function PromoBanner({ isInView }: { isInView: boolean }) {
           transition={{ delay: 0.32 }}
           className="group relative flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-3.5 mb-8 overflow-hidden transition-colors duration-300"
           style={{
-            border: `1px solid ${GREEN_A(0.22)}`,
+            border: "1px solid var(--foreground)",
             background: `linear-gradient(90deg, ${GREEN_A(0.07)}, ${GREEN_A(0.03)})`,
             borderRadius: "0.875rem",
           }}
@@ -305,7 +305,7 @@ function PromoBanner({ isInView }: { isInView: boolean }) {
                 className="font-bold tracking-widest px-1.5 py-0.5 rounded-md text-[10px]"
                 style={{
                   background: GREEN_A(0.12),
-                  border: `1px solid ${GREEN_A(0.25)}`,
+                  border: "1px solid var(--foreground)",
                   color: GREEN,
                 }}
               >
@@ -364,7 +364,7 @@ function PlanCard({
       className="sm:hidden relative overflow-hidden"
       style={{
         borderRadius: "0.875rem",
-        border: plan.popular ? `1px solid ${GREEN_A(0.45)}` : "1px solid var(--border)",
+        border: "1px solid var(--foreground)",
         background: plan.popular
           ? `linear-gradient(135deg, var(--contact-bg) 0%, oklch(0.09 0.022 40) 100%)`
           : "var(--card)",
@@ -386,6 +386,8 @@ function PlanCard({
       {/* ── Collapsed header row ── */}
       <button
         onClick={onToggle}
+        aria-label={`${expanded ? 'Collapse' : 'Expand'} details for ${plan.name} plan`}
+        aria-expanded={expanded}
         className="relative w-full flex items-center gap-3 px-4 py-3.5 text-left"
       >
         {/* Icon */}
@@ -414,7 +416,7 @@ function PlanCard({
                 style={{
                   background: plan.color(0.12),
                   color: plan.solidColor,
-                  border: `1px solid ${plan.color(0.25)}`,
+                  border: "1px solid var(--foreground)",
                   borderRadius: "4px",
                 }}
               >
@@ -473,7 +475,7 @@ function PlanCard({
           >
             <div
               className="px-4 pb-4 pt-1"
-              style={{ borderTop: `1px solid ${plan.color(0.12)}` }}
+              style={{ borderTop: "1px solid var(--foreground)" }}
             >
               {/* Feature grid — 2 cols for compactness */}
               <ul className="grid grid-cols-2 gap-x-3 gap-y-1.5 mt-3 mb-4">
@@ -561,9 +563,7 @@ function PlanCard({
       className="hidden sm:flex relative flex-col overflow-hidden"
       style={{
         borderRadius: "1rem",
-        border: plan.popular
-          ? `1px solid ${GREEN_A(0.45)}`
-          : "1px solid var(--border)",
+        border: "1px solid var(--foreground)",
         boxShadow: plan.popular
           ? `0 0 0 1px ${GREEN_A(0.15)}, 0 24px 48px ${GREEN_A(0.18)}`
           : "0 2px 12px oklch(0 0 0 / 0.06)",
@@ -585,7 +585,7 @@ function PlanCard({
       {plan.tag && (
         <div
           className="relative flex items-center justify-center gap-1.5 py-2 border-b"
-          style={{ background: plan.color(0.08), borderColor: plan.color(0.18) }}
+          style={{ background: plan.color(0.08), borderColor: "var(--foreground)" }}
         >
           {plan.id === "premium" && <TbSparkles style={{ color: plan.solidColor }} size={10} />}
           {plan.id === "elite" && <RiVipCrownFill style={{ color: plan.solidColor }} size={10} />}
@@ -616,7 +616,7 @@ function PlanCard({
             className="inline-flex items-baseline gap-1 px-2.5 py-2"
             style={{
               background: plan.popular ? "oklch(1 0 0 / 0.06)" : "var(--secondary)",
-              border: plan.popular ? "1px solid oklch(1 0 0 / 0.10)" : "1px solid var(--border)",
+              border: "1px solid var(--foreground)",
               borderRadius: "0.625rem",
             }}
           >
@@ -625,7 +625,7 @@ function PlanCard({
           </div>
         </div>
 
-        <div className="mb-5 pb-5" style={{ borderBottom: plan.popular ? "1px solid oklch(1 0 0 / 0.08)" : "1px solid var(--border)" }}>
+        <div className="mb-5 pb-5" style={{ borderBottom: "1px solid var(--foreground)" }}>
           <div className="flex items-end gap-1">
             <span className="font-mono text-lg font-bold mb-0.5" style={{ color: "var(--muted-foreground)" }}>₹</span>
             <span className="font-display font-black italic leading-none" style={{ fontSize: "clamp(2.4rem, 5vw, 3rem)", color: plan.popular ? GREEN : "var(--foreground)" }}>

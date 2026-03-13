@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { FaInstagram, FaWhatsapp } from "react-icons/fa";
 import {
@@ -46,6 +46,13 @@ function scrollTo(href: string) {
 // ─── Footer Body ──────────────────────────────────────────────────────────────
 
 function FooterBody() {
+  const [copied, setCopied] = useState<string | null>(null);
+
+  const copyToClipboard = (text: string, id: string) => {
+    navigator.clipboard.writeText(text);
+    setCopied(id);
+    setTimeout(() => setCopied(null), 2000);
+  };
   return (
     <div className="w-full px-4 sm:px-6 lg:px-8 pt-14 pb-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
@@ -94,7 +101,7 @@ function FooterBody() {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.1, y: -1 }}
               whileTap={{ scale: 0.9 }}
-              className="w-9 h-9 rounded-xl flex items-center justify-center text-white bg-green-500/20 border border-green-500/30 hover:bg-green-500 transition-colors"
+              className="w-9 h-9 rounded-xl flex items-center justify-center text-white bg-green-500/20 border border-foreground hover:bg-green-500 transition-colors"
               title="WhatsApp"
             >
               <FaWhatsapp size={16} className="text-green-400 group-hover:text-white" />
@@ -102,7 +109,7 @@ function FooterBody() {
           </div>
 
           {/* Live badge */}
-          <div className="inline-flex items-center gap-2 border border-green-500/20 bg-green-500/[0.06] rounded-lg px-3 py-1.5">
+          <div className="inline-flex items-center gap-2 border border-foreground bg-green-500/[0.06] rounded-lg px-3 py-1.5">
             <RiLiveLine className="text-green-400 animate-pulse" size={11} />
             <span className="text-green-400 font-mono text-[9px] tracking-widest uppercase font-bold">
               Open Now · 6AM–10PM
@@ -141,35 +148,59 @@ function FooterBody() {
 
         {/* ── Contact Info ── */}
         <div>
-          <h4 className="flex items-center gap-2 font-mono font-bold text-[10px] tracking-[4px] uppercase mb-5 pb-3 border-b border-foreground/[0.05]" style={{ color: "var(--foreground)" }}>
+          <h4 className="flex items-center gap-2 font-mono font-bold text-[10px] tracking-[4px] uppercase mb-5 pb-3 border-b border-foreground" style={{ color: "var(--foreground)" }}>
             <FiPhone size={11} style={{ color: "var(--primary)" }} /> Contact
           </h4>
           <div className="flex flex-col gap-5">
-            <div className="flex gap-3">
+            <div className="flex gap-3 relative group/addr cursor-pointer" onClick={() => copyToClipboard("3rd Floor, Aishwarya Sampurna 79/1 Vanivilas Rd, Above KFC Gandhi Bazaar, Basavanagudi, Bengaluru – 560004", "address")}>
               <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: "oklch(0.72 0.18 48 / 0.1)" }}>
                 <FiMapPin size={12} style={{ color: "var(--primary)" }} />
               </div>
-              <address className="font-mono text-xs not-italic leading-relaxed" style={{ color: "var(--muted-foreground)" }}>
-                3rd Floor, Aishwarya Sampurna
-                <br />79/1 Vanivilas Rd, Above KFC
-                <br />Gandhi Bazaar, Basavanagudi
-                <br />Bengaluru – 560004
-              </address>
+              <div className="relative">
+                <address className="font-mono text-xs not-italic leading-relaxed transition-colors group-hover:text-foreground" style={{ color: "var(--muted-foreground)" }}>
+                  3rd Floor, Aishwarya Sampurna
+                  <br />79/1 Vanivilas Rd, Above KFC
+                  <br />Gandhi Bazaar, Basavanagudi
+                  <br />Bengaluru – 560004
+                </address>
+                <AnimatePresence>
+                  {copied === "address" && (
+                    <motion.span
+                      initial={{ opacity: 0, y: 5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="absolute -top-6 left-0 bg-primary text-primary-fg text-[8px] font-bold px-1.5 py-0.5 rounded shadow-lg"
+                    >
+                      COPIED!
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
 
-            <a href="tel:9019342121" className="flex items-center gap-3 group">
+            <div className="flex items-center gap-3 group/phone relative cursor-pointer" onClick={(e) => { e.preventDefault(); copyToClipboard("9019342121", "phone"); }}>
               <div className="w-7 h-7 rounded-lg bg-green-500/10 flex items-center justify-center flex-shrink-0">
                 <FiPhone className="text-green-400" size={12} />
               </div>
               <span
-                className="font-mono text-xs transition-colors"
+                className="font-mono text-xs transition-colors group-hover/phone:text-foreground"
                 style={{ color: "var(--muted-foreground)" }}
-                onMouseEnter={e => (e.currentTarget.style.color = "var(--foreground)")}
-                onMouseLeave={e => (e.currentTarget.style.color = "var(--muted-foreground)")}
               >
                 9019342121
               </span>
-            </a>
+              <AnimatePresence>
+                {copied === "phone" && (
+                  <motion.span
+                    initial={{ opacity: 0, x: 10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="absolute -right-12 bg-green-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded shadow-lg"
+                  >
+                    COPIED!
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </div>
 
             <div className="flex gap-3">
               <div className="w-7 h-7 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -203,8 +234,8 @@ function FooterBody() {
         </div>
 
         {/* ── Membership Plans ── */}
-        <div>
-          <h4 className="flex items-center gap-2 font-mono font-bold text-[10px] tracking-[4px] uppercase mb-5 pb-3 border-b border-foreground/[0.05]" style={{ color: "var(--foreground)" }}>
+        {/* <div>
+          <h4 className="flex items-center gap-2 font-mono font-bold text-[10px] tracking-[4px] uppercase mb-5 pb-3 border-b border-foreground" style={{ color: "var(--foreground)" }}>
             <RiVipCrownFill style={{ color: "var(--primary)" }} size={11} /> Plans
           </h4>
           <div className="flex flex-col gap-3">
@@ -217,7 +248,7 @@ function FooterBody() {
               <button
                 key={plan.name}
                 onClick={() => scrollTo("#membership")}
-                className="group flex items-center justify-between rounded-xl px-3 py-2.5 border border-foreground/[0.05] hover:border-foreground/[0.12] transition-all duration-200 text-left"
+                className="group flex items-center justify-between rounded-xl px-3 py-2.5 border border-foreground transition-all duration-200 text-left"
                 style={{ background: "var(--card)" }}
               >
                 <div>
@@ -239,11 +270,11 @@ function FooterBody() {
               <FiZap size={10} /> View All Plans
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* ── Bottom bar ── */}
-      <div className="border-t border-foreground/[0.05] pt-6 flex flex-col md:flex-row items-center justify-between gap-y-4 gap-x-6 text-center md:text-left">
+      <div className="border-t border-foreground pt-6 flex flex-col md:flex-row items-center justify-between gap-y-4 gap-x-6 text-center md:text-left">
         <p className="font-mono text-[10px] tracking-widest order-3 md:order-1" style={{ color: "oklch(0.45 0.02 52)" }}>
           © {new Date().getFullYear()} Shield&apos;s Fitness Club, Basavanagudi. All rights reserved.
         </p>
@@ -305,7 +336,7 @@ function ScrollToTop() {
 export default function Footer() {
   return (
     <>
-      <footer className="border-t border-foreground/[0.05] relative overflow-hidden" style={{ background: "var(--background)" }}>
+      <footer className="border-t border-foreground relative overflow-hidden" style={{ background: "var(--background)" }}>
         {/* Top accent line */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
         {/* Ambient glow */}

@@ -180,7 +180,7 @@ function StatsBanner({ isInView }: { isInView: boolean }) {
             initial={{ opacity: 0, y: 16 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.55 + i * 0.07 }}
-            className="relative flex items-center gap-3.5 rounded-xl border border-foreground/[0.05] bg-surface px-4 py-3.5 overflow-hidden group hover:border-accent/40 transition-all duration-300 cursor-default"
+            className="relative flex items-center gap-3.5 rounded-xl border border-foreground bg-surface px-4 py-3.5 overflow-hidden group hover:border-accent/40 transition-all duration-300 cursor-default"
           >
             <div
               className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-110 duration-300"
@@ -215,7 +215,7 @@ function PromoBanner({ isInView }: { isInView: boolean }) {
       initial={{ opacity: 0, y: 12 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: 0.65 }}
-      className="group flex items-center gap-4 rounded-xl border border-primary/25 bg-primary/[0.06] hover:bg-primary/[0.12] hover:border-primary/50 px-5 py-3.5 mb-6 transition-all duration-300"
+      className="group flex items-center gap-4 rounded-xl border border-foreground bg-primary/[0.06] hover:bg-primary/[0.12] hover:border-primary/50 px-5 py-3.5 mb-6 transition-all duration-300"
     >
       <div className="flex items-center gap-2 flex-shrink-0">
         <RiLiveLine className="text-red-500 animate-pulse" size={18} />
@@ -227,7 +227,7 @@ function PromoBanner({ isInView }: { isInView: boolean }) {
       <div className="flex items-center gap-2.5 flex-1 min-w-0">
         <FaTrophy className="text-accent flex-shrink-0" size={13} />
         <span className="text-text-mid font-mono text-xs truncate">
-          This week's transformation winner just posted — see the results!
+          This week&apos;s transformation winner just posted — see the results!
         </span>
       </div>
       <div className="flex-shrink-0 flex items-center gap-1.5 text-accent font-mono text-[11px] font-bold tracking-widest uppercase opacity-80 group-hover:opacity-100 group-hover:gap-2 transition-all">
@@ -260,7 +260,7 @@ function PostCard({
       initial={{ opacity: 0, y: 28 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: 0.2 + index * 0.07, ease: [0.22, 1, 0.36, 1], duration: 0.65 }}
-      className="relative group rounded-xl overflow-hidden border border-foreground/[0.05] hover:border-accent/30 transition-all duration-300"
+      className="relative group rounded-xl overflow-hidden border border-foreground hover:border-accent/30 transition-all duration-300"
       style={{ aspectRatio: "1 / 1" }}
     >
       {/* Image link */}
@@ -389,7 +389,7 @@ function CTABanner({ isInView }: { isInView: boolean }) {
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: 0.9 }}
-      className="relative mt-8 rounded-2xl overflow-hidden border border-foreground/[0.05]"
+      className="relative mt-8 rounded-2xl overflow-hidden border border-foreground"
     >
       <div
         className="absolute inset-0"
@@ -436,7 +436,7 @@ function CTABanner({ isInView }: { isInView: boolean }) {
           ].map(({ Icon, val, label }) => (
             <div
               key={label}
-              className="flex items-center gap-2 border border-foreground/[0.08] rounded-lg px-3 py-2 bg-foreground/[0.03]"
+              className="flex items-center gap-2 border border-foreground rounded-lg px-3 py-2 bg-foreground/[0.03]"
             >
               <Icon className="text-accent" size={12} />
               <span className="text-text-hi font-mono text-xs font-bold">{val}</span>
@@ -525,7 +525,7 @@ export default function InstagramSection() {
             initial={{ opacity: 0, scale: 0.92 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ delay: 0.3 }}
-            className="group flex flex-col xs:flex-row items-center gap-4 border border-foreground/[0.08] hover:border-accent/30 bg-surface backdrop-blur-sm rounded-2xl p-4 transition-all duration-300 w-full lg:w-auto lg:min-w-[310px]"
+            className="group flex flex-col xs:flex-row items-center gap-4 border border-foreground hover:border-accent/30 bg-surface backdrop-blur-sm rounded-2xl p-4 transition-all duration-300 w-full lg:w-auto lg:min-w-[310px]"
           >
             <div className="relative flex-shrink-0">
               <div
@@ -554,7 +554,7 @@ export default function InstagramSection() {
                 <div className="text-[9px] sm:text-[10px] font-mono font-bold tracking-widest uppercase px-2 sm:px-3 py-1 rounded-md inline-flex items-center gap-1.5 text-primary-fg bg-primary">
                   <FiShare2 size={9} /> Follow
                 </div>
-                <div className="text-[9px] sm:text-[10px] font-mono font-bold tracking-widest uppercase px-2 sm:px-3 py-1 rounded-md inline-flex items-center gap-1.5 text-text-lo border border-foreground/[0.08] hover:border-foreground/[0.2] transition-colors">
+                <div className="text-[9px] sm:text-[10px] font-mono font-bold tracking-widest uppercase px-2 sm:px-3 py-1 rounded-md inline-flex items-center gap-1.5 text-text-lo border border-foreground hover:border-foreground/[0.2] transition-colors">
                   <FiSend size={9} /> DM
                 </div>
               </div>
@@ -597,7 +597,7 @@ export default function InstagramSection() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ delay: 1.0 }}
-          className="flex flex-col sm:flex-row items-center justify-between gap-3 mt-6 pt-6 border-t border-foreground/[0.05]"
+          className="flex flex-col sm:flex-row items-center justify-between gap-3 mt-6 pt-6 border-t border-foreground"
         >
           <div className="flex items-center gap-2 text-text-lo/40 font-mono text-[10px] tracking-widest">
             <FiCamera size={11} />

@@ -116,7 +116,7 @@ function HighlightBanner({ isInView }: { isInView: boolean }) {
       initial={{ opacity: 0, y: 16 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: 0.45 }}
-      className="grid grid-cols-2 md:grid-cols-4 divide-foreground/[0.07] border border-foreground/[0.07] rounded-xl overflow-hidden mb-10"
+      className="grid grid-cols-2 md:grid-cols-4 divide-foreground/[0.07] border border-foreground rounded-xl overflow-hidden mb-10"
     >
       {highlights.map((h, i) => {
         const Icon = h.icon;
@@ -156,7 +156,7 @@ function FeaturedReview({ review, isInView }: { review: typeof reviews[0]; isInV
       initial={{ opacity: 0, y: 24 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: 0.55 }}
-      className="relative col-span-full rounded-2xl border border-foreground/[0.08] overflow-hidden mb-5 group"
+      className="relative col-span-full rounded-2xl border border-foreground overflow-hidden mb-5 group"
     >
       {/* BG gradient */}
       <div
@@ -210,7 +210,7 @@ function FeaturedReview({ review, isInView }: { review: typeof reviews[0]; isInV
         {/* Right — content */}
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-3 mb-3">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-accent/15 border border-accent/25">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-accent/15 border border-foreground">
               <TagIcon className="text-accent" size={11} />
               <span className="text-accent font-mono font-bold text-[9px] tracking-widest uppercase">
                 {review.tag}
@@ -268,7 +268,7 @@ function ReviewCard({
       initial={{ opacity: 0, y: 28 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: 0.2 + index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-      className="relative flex flex-col bg-surface border border-foreground/[0.05] rounded-2xl p-5 hover:border-accent/30 hover:bg-foreground/[0.02] transition-all duration-300 group overflow-hidden"
+      className="relative flex flex-col bg-surface border border-foreground rounded-2xl p-5 hover:bg-foreground/[0.02] transition-all duration-300 group overflow-hidden"
     >
       {/* Subtle corner glow on hover */}
       <div className="absolute top-0 right-0 w-24 h-24 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none rounded-2xl"
@@ -302,7 +302,7 @@ function ReviewCard({
       {/* Stars + tag row */}
       <div className="flex items-center gap-2 mb-3">
         <Stars rating={review.rating} />
-        <div className="ml-auto flex items-center gap-1 px-2 py-0.5 rounded-md bg-foreground/[0.04] border border-foreground/[0.05]">
+        <div className="ml-auto flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-foreground/[0.04] border border-foreground">
           <TagIcon className="text-text-lo" size={9} />
           <span className="text-text-lo font-mono text-[8px] tracking-widest uppercase">{review.tag}</span>
         </div>
@@ -314,7 +314,7 @@ function ReviewCard({
       </p>
 
       {/* Footer */}
-      <div className="flex items-center gap-3 pt-3 border-t border-foreground/[0.06]">
+      <div className="flex items-center gap-3 pt-3 border-t border-foreground">
         <button
           onClick={() => setHelped((h) => !h)}
           className={`flex items-center gap-1.5 font-mono text-[10px] transition-all duration-200 ${helped ? "text-accent" : "text-text-lo hover:text-text-hi"
@@ -343,10 +343,10 @@ function WriteReviewBanner({ isInView }: { isInView: boolean }) {
       initial={{ opacity: 0, y: 16 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: 0.9 }}
-      className="group flex flex-col xs:flex-row items-center justify-between gap-4 mt-8 rounded-xl border border-foreground/[0.08] bg-foreground/[0.02] hover:bg-foreground/[0.04] hover:border-foreground/[0.15] px-6 py-4 transition-all duration-300"
+      className="group flex flex-col xs:flex-row items-center justify-between gap-4 mt-8 rounded-xl border border-foreground bg-foreground/[0.02] px-6 py-4 transition-all duration-300"
     >
       <div className="flex items-center gap-4">
-        <div className="w-10 h-10 rounded-xl bg-foreground/[0.03] border border-foreground/[0.06] flex items-center justify-center flex-shrink-0">
+        <div className="w-10 h-10 rounded-xl bg-foreground/[0.03] border border-foreground flex items-center justify-center flex-shrink-0">
           <FcGoogle size={20} />
         </div>
         <div>
@@ -422,7 +422,7 @@ export default function Reviews() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ delay: 0.3 }}
-            className="group flex flex-col sm:flex-row items-center gap-5 border border-foreground/[0.08] hover:border-foreground/[0.15] bg-foreground/[0.01] hover:bg-foreground/[0.03] rounded-2xl px-6 py-5 transition-all duration-300 w-full lg:w-auto"
+            className="group flex flex-col sm:flex-row items-center gap-5 border border-foreground bg-foreground/[0.01] hover:bg-foreground/[0.03] rounded-2xl px-6 py-5 transition-all duration-300 w-full lg:w-auto"
           >
             <div className="text-center">
               <div className="flex items-center justify-center gap-2 mb-1.5">
@@ -467,7 +467,7 @@ export default function Reviews() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.3 }}
-            className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 mb-8"
+            className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 mb-8"
           >
             {visible.map((review, i) => (
               <ReviewCard key={review.name} review={review} index={i} isInView={isInView} />
@@ -480,7 +480,8 @@ export default function Reviews() {
           <button
             onClick={() => setCurrentPage((p) => Math.max(0, p - 1))}
             disabled={currentPage === 0}
-            className="w-9 h-9 rounded-lg border border-foreground/[0.1] flex items-center justify-center text-text-lo hover:border-accent/50 hover:text-accent transition-all disabled:opacity-25 disabled:cursor-not-allowed"
+            aria-label="Previous page of reviews"
+            className="w-9 h-9 rounded-lg border border-foreground flex items-center justify-center text-text-lo hover:text-accent transition-all disabled:opacity-25 disabled:cursor-not-allowed"
           >
             <FiChevronLeft size={16} />
           </button>
@@ -488,9 +489,10 @@ export default function Reviews() {
             <button
               key={i}
               onClick={() => setCurrentPage(i)}
+              aria-label={`Go to page ${i + 1}`}
               className={`w-9 h-9 rounded-lg text-xs font-mono font-bold transition-all duration-200 ${i === currentPage
                 ? "bg-accent text-white shadow-lg shadow-accent/20"
-                : "border border-black/[0.1] text-text-lo hover:border-accent/40 hover:text-accent"
+                : "border border-foreground text-text-lo hover:text-accent"
                 }`}
             >
               {i + 1}
@@ -499,7 +501,8 @@ export default function Reviews() {
           <button
             onClick={() => setCurrentPage((p) => Math.min(totalPages - 1, p + 1))}
             disabled={currentPage === totalPages - 1}
-            className="w-9 h-9 rounded-lg border border-black/[0.1] flex items-center justify-center text-text-lo hover:border-accent/50 hover:text-accent transition-all disabled:opacity-25 disabled:cursor-not-allowed"
+            aria-label="Next page of reviews"
+            className="w-9 h-9 rounded-lg border border-foreground flex items-center justify-center text-text-lo hover:text-accent transition-all disabled:opacity-25 disabled:cursor-not-allowed"
           >
             <FiChevronRight size={16} />
           </button>
