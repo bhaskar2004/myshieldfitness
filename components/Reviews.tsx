@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { motion, useInView, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useEffect, useCallback } from "react";
 import {
   FiStar, FiThumbsUp, FiChevronLeft, FiChevronRight,
@@ -241,7 +241,7 @@ const reviews = [
 ];
 
 const highlights = [
-  { icon: MdStar, value: "4.8", label: "Google Rating", color: "#facc15" },
+  { icon: MdStar, value: "4.8", label: "Google Rating", color: "#fab515ff" },
   { icon: MdGroups, value: "287", label: "Reviews", color: "#60a5fa" },
   { icon: FiTrendingUp, value: "98%", label: "Recommend Us", color: "#03744b" },
   { icon: MdEmojiEvents, value: "#1", label: "In Basavanagudi", color: "var(--primary)" },
@@ -291,7 +291,7 @@ function HighlightBanner({ isInView }: { isInView: boolean }) {
       initial={{ opacity: 0, y: 16 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: 0.45 }}
-      className="grid grid-cols-2 md:grid-cols-4 divide-foreground/[0.07] border border-foreground rounded-xl overflow-hidden mb-10"
+      className="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-foreground/[0.08] border border-foreground rounded-xl overflow-hidden mb-10 bg-foreground/[0.01]"
     >
       {highlights.map((h, i) => {
         const Icon = h.icon;
@@ -301,17 +301,17 @@ function HighlightBanner({ isInView }: { isInView: boolean }) {
             initial={{ opacity: 0, y: 12 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.5 + i * 0.07 }}
-            className="flex items-center gap-3.5 px-5 py-4 bg-foreground/[0.01] hover:bg-foreground/[0.03] transition-colors group cursor-default"
+            className="flex items-center gap-3.5 px-6 py-5 hover:bg-foreground/[0.03] transition-colors group cursor-default"
           >
             <div
-              className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300"
-              style={{ background: `${h.color}1f` }}
+              className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300"
+              style={{ background: `${h.color}24` }}
             >
-              <Icon style={{ color: h.color }} size={16} />
+              <Icon style={{ color: h.color }} size={18} />
             </div>
             <div>
-              <p className="text-text-hi font-mono font-bold text-lg leading-none">{h.value}</p>
-              <p className="text-text-lo font-mono text-[9px] tracking-widest uppercase mt-0.5">{h.label}</p>
+              <p className="text-text-hi font-mono font-bold text-xl leading-none">{h.value}</p>
+              <p className="text-text-lo font-mono text-[10px] tracking-wider uppercase mt-1 opacity-80">{h.label}</p>
             </div>
           </motion.div>
         );
@@ -383,8 +383,8 @@ function FeaturedReview({ isInView }: { isInView: boolean }) {
               onClick={() => goTo(i, i > activeIndex ? 1 : -1)}
               aria-label={`Go to review ${i + 1}`}
               className={`h-1.5 rounded-full transition-all duration-300 flex-shrink-0 ${i === activeIndex
-                  ? "w-6 bg-accent"
-                  : "w-1.5 bg-foreground/20 hover:bg-foreground/40"
+                ? "w-6 bg-accent"
+                : "w-1.5 bg-foreground/20 hover:bg-foreground/40"
                 }`}
             />
           ))}
@@ -464,14 +464,14 @@ function FeaturedReview({ isInView }: { isInView: boolean }) {
             {/* Right — content */}
             <div className="flex-1 min-w-0">
               <div className="flex items-start justify-between gap-3 mb-3">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-accent/15 border border-foreground">
-                  <TagIcon className="text-accent" size={11} />
-                  <span className="text-accent font-mono font-bold text-[9px] tracking-widest uppercase">{review.tag}</span>
-                </div>
-                <span className="text-accent font-mono text-[10px] tracking-widest uppercase bg-accent/10 px-2 py-0.5 rounded-sm">
-                  Featured Review
-                </span>
-              </div>
+                 <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-primary/10 border border-foreground">
+                   <TagIcon className="text-primary" size={12} />
+                   <span className="text-primary font-mono font-bold text-[10px] tracking-wider uppercase">{review.tag}</span>
+                 </div>
+                 <span className="text-primary font-mono font-bold text-[10px] tracking-wider uppercase bg-primary/5 px-2.5 py-1 rounded-sm border border-primary/20">
+                   Featured Review
+                 </span>
+               </div>
 
               <p className="text-text-hi text-sm font-mono leading-relaxed mb-4">
                 &ldquo;{review.text}&rdquo;
@@ -603,8 +603,17 @@ function WriteReviewBanner({ isInView }: { isInView: boolean }) {
 // ─── Main Section ─────────────────────────────────────────────────────────────
 
 export default function Reviews() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const bgY1 = useTransform(scrollYProgress, [0, 1], [-100, 100]);
+  const bgY2 = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  const titleY = useTransform(scrollYProgress, [0, 1], [20, -20]);
+
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
   const [currentPage, setCurrentPage] = useState(0);
   const perPage = 3;
@@ -612,10 +621,16 @@ export default function Reviews() {
   const visible = reviews.slice(currentPage * perPage, currentPage * perPage + perPage);
 
   return (
-    <section id="reviews" ref={ref} className="py-24 lg:py-32 bg-dark relative overflow-hidden">
+    <section id="reviews" ref={sectionRef} className="py-24 lg:py-32 bg-dark relative overflow-hidden">
       {/* Ambient */}
-      <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-yellow-500/3 blur-[160px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-accent/4 blur-[140px] rounded-full pointer-events-none" />
+      <motion.div 
+        className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-yellow-500/3 blur-[160px] rounded-full pointer-events-none" 
+        style={{ y: bgY1 }}
+      />
+      <motion.div 
+        className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-accent/4 blur-[140px] rounded-full pointer-events-none" 
+        style={{ y: bgY2 }}
+      />
 
       <div className="w-full px-4 sm:px-6 lg:px-8">
 
@@ -634,6 +649,7 @@ export default function Reviews() {
             <motion.h2
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
+              style={{ y: titleY }}
               transition={{ delay: 0.1 }}
               className="text-3xl xs:text-4xl lg:text-6xl xl:text-7xl font-display text-text-hi leading-[0.92]"
             >
@@ -717,8 +733,8 @@ export default function Reviews() {
               onClick={() => setCurrentPage(i)}
               aria-label={`Page ${i + 1}`}
               className={`w-9 h-9 rounded-lg text-xs font-mono font-bold transition-all duration-200 ${i === currentPage
-                  ? "bg-accent text-white shadow-lg shadow-accent/20"
-                  : "border border-foreground text-text-lo hover:text-accent"
+                ? "bg-accent text-white shadow-lg shadow-accent/20"
+                : "border border-foreground text-text-lo hover:text-accent"
                 }`}
             >
               {i + 1}

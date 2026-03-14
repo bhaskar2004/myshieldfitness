@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { motion, useInView, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
 import {
   FiMapPin, FiPhone, FiClock, FiSend, FiInstagram,
@@ -501,14 +501,29 @@ function ContactForm({ isInView }: { isInView: boolean }) {
 // ─── Main Section ─────────────────────────────────────────────────────────────
 
 export default function Contact() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const glowY1 = useTransform(scrollYProgress, [0, 1], [-60, 60]);
+  const glowY2 = useTransform(scrollYProgress, [0, 1], [60, -60]);
+  const layoutDrift = useTransform(scrollYProgress, [0, 1], [30, -30]);
+
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
   return (
-    <section id="contact" ref={ref} className="py-12 sm:py-24 lg:py-32 relative overflow-hidden" style={{ background: "var(--background)" }}>
+    <section id="contact" ref={sectionRef} className="py-12 sm:py-24 lg:py-32 relative overflow-hidden" style={{ background: "var(--background)" }}>
       {/* Ambient glows */}
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent/[0.05] blur-[180px] rounded-full pointer-events-none" />
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-purple-600/[0.04] blur-[160px] rounded-full pointer-events-none" />
+      <motion.div 
+        className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent/[0.05] blur-[180px] rounded-full pointer-events-none" 
+        style={{ y: glowY1 }}
+      />
+      <motion.div 
+        className="absolute top-0 right-0 w-[400px] h-[400px] bg-purple-600/[0.04] blur-[160px] rounded-full pointer-events-none" 
+        style={{ y: glowY2 }}
+      />
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
 
       <div className="w-full px-4 sm:px-6 lg:px-8">
@@ -556,7 +571,10 @@ export default function Contact() {
         <TrustBar isInView={isInView} />
 
         {/* ── Two-column layout ── */}
-        <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8 xl:gap-14">
+        <motion.div 
+          style={{ y: layoutDrift }}
+          className="grid lg:grid-cols-[1fr_1.1fr] gap-8 xl:gap-14"
+        >
 
           {/* Left */}
           <div>
@@ -596,7 +614,7 @@ export default function Contact() {
 
           {/* Right — Form */}
           <ContactForm isInView={isInView} />
-        </div>
+        </motion.div>
       </div>
     </section>
   );

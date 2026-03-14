@@ -3,6 +3,7 @@ import "./globals.css";
 import Loader from "@/components/Loader";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://shieldsfitness.in"),
   title: "Shield's Fitness Club Basavanagudi | Premium Gym in Bengaluru",
   description:
     "Shield's Fitness Club in Basavanagudi, Bengaluru - rated 4.8/5 with 287+ reviews. Modern equipment, certified trainers, strength & cardio training. Join today!",

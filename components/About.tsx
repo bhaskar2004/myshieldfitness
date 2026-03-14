@@ -7,11 +7,11 @@ import {
   useSpring,
   useTransform,
   animate,
+  useScroll,
 } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import { FiCheck, FiArrowUpRight, FiStar } from "react-icons/fi";
-import { GiShield } from "react-icons/gi";
 
 /* ─── animated counter ─── */
 function CountUp({
@@ -191,6 +191,14 @@ const features = [
 /* ══════════════════ MAIN COMPONENT ══════════════════ */
 export default function About() {
   const sectionRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const bgY = useTransform(scrollYProgress, [0, 1], [-100, 100]);
+  const glowY = useTransform(scrollYProgress, [0, 1], [-50, 50]);
+  
   const isInView = useInView(sectionRef, { once: true, margin: "-80px" });
 
   const scrollTo = (href: string) => {
@@ -207,17 +215,21 @@ export default function About() {
     >
       {/* ── background textures ── */}
       {/* diagonal stripe */}
-      <div
+      <motion.div
         className="absolute inset-0 opacity-[0.04] pointer-events-none"
         style={{
           backgroundImage: "repeating-linear-gradient(45deg, var(--primary) 0px, var(--primary) 1px, transparent 0px, transparent 50%)",
           backgroundSize: "24px 24px",
+          y: bgY
         }}
       />
       {/* right-side glow */}
-      <div
+      <motion.div
         className="absolute top-0 right-0 w-[55%] h-full pointer-events-none"
-        style={{ background: "radial-gradient(ellipse at 80% 40%, oklch(0.72 0.18 48 / 0.07) 0%, transparent 65%)" }}
+        style={{ 
+          background: "radial-gradient(ellipse at 80% 40%, oklch(0.72 0.18 48 / 0.07) 0%, transparent 65%)",
+          y: glowY
+        }}
       />
       {/* left dark shadow */}
       <div className="absolute top-0 left-0 w-px h-full bg-gradient-to-b from-transparent via-accent/10 to-transparent" />
@@ -286,9 +298,9 @@ export default function About() {
 
             {/* body copy */}
             <motion.p
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : {}}
-              transition={{ delay: 0.42 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.42, duration: 0.8 }}
               className="text-[15px] leading-[1.75] mb-3 font-body max-w-2xl text-center"
               style={{ color: "var(--muted-foreground)" }}
             >
@@ -297,9 +309,9 @@ export default function About() {
               <span style={{ color: "var(--foreground)" }} className="font-semibold">serious about transformation.</span>
             </motion.p>
             <motion.p
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : {}}
-              transition={{ delay: 0.5 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.5, duration: 0.8 }}
               className="text-[14px] leading-[1.75] mb-8 font-body max-w-2xl text-center"
               style={{ color: "var(--muted-foreground)" }}
             >
@@ -316,8 +328,15 @@ export default function About() {
               ))}
             </div>
 
+            {/* milestones */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-4xl mt-12">
+              {milestones.map((m, i) => (
+                <MilestoneCard key={m.label} m={m} index={i} triggered={isInView} />
+              ))}
+            </div>
+
             {/* divider */}
-            <div className="flex flex-wrap items-center justify-center gap-4 mt-9">
+            <div className="flex flex-wrap items-center justify-center gap-4 mt-16">
               <motion.button
                 onClick={() => scrollTo("#membership")}
                 className="group relative overflow-hidden flex items-center gap-2.5 px-7 py-3 font-bold text-xs tracking-[3px] uppercase font-mono rounded-sm"

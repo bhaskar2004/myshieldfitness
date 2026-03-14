@@ -233,44 +233,6 @@ function FooterBody() {
           </div>
         </div>
 
-        {/* ── Membership Plans ── */}
-        {/* <div>
-          <h4 className="flex items-center gap-2 font-mono font-bold text-[10px] tracking-[4px] uppercase mb-5 pb-3 border-b border-foreground" style={{ color: "var(--foreground)" }}>
-            <RiVipCrownFill style={{ color: "var(--primary)" }} size={11} /> Plans
-          </h4>
-          <div className="flex flex-col gap-3">
-            {[
-              { name: "Basic", period: "1 Month", price: "₹2,000" },
-              { name: "Standard", period: "3 Months", price: "₹5,000" },
-              { name: "Premium", period: "6 Months", price: "₹7,000" },
-              { name: "Elite", period: "12 Months", price: "₹9,999" },
-            ].map((plan) => (
-              <button
-                key={plan.name}
-                onClick={() => scrollTo("#membership")}
-                className="group flex items-center justify-between rounded-xl px-3 py-2.5 border border-foreground transition-all duration-200 text-left"
-                style={{ background: "var(--card)" }}
-              >
-                <div>
-                  <p className="font-mono font-bold text-[10px] tracking-wide" style={{ color: "var(--foreground)" }}>{plan.name}</p>
-                  <p className="font-mono text-[9px] mt-0.5" style={{ color: "var(--muted-foreground)" }}>{plan.period}</p>
-                </div>
-                <span className="font-mono font-black text-[11px]" style={{ color: "var(--primary)" }}>{plan.price}</span>
-              </button>
-            ))}
-            <button
-              onClick={() => scrollTo("#membership")}
-              className="flex items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 font-mono font-black text-[10px] tracking-widest uppercase transition-all duration-200"
-              style={{
-                background: "var(--primary)",
-                color: "var(--primary-foreground)",
-                boxShadow: "0 4px 16px oklch(0.72 0.18 48 / 0.25)",
-              }}
-            >
-              <FiZap size={10} /> View All Plans
-            </button>
-          </div>
-        </div> */}
       </div>
 
       {/* ── Bottom bar ── */}

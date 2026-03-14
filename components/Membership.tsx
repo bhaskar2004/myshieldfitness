@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { motion, useInView, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
 import {
   FiCheck,
@@ -851,55 +851,45 @@ function ContactNote({ isInView }: { isInView: boolean }) {
 // ─── Main Section ─────────────────────────────────────────────────────────────
 
 export default function Membership() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const bgY = useTransform(scrollYProgress, [0, 1], [-80, 80]);
+  const glowY = useTransform(scrollYProgress, [0, 1], [-40, 40]);
+  const cardDrift = useTransform(scrollYProgress, [0, 1], [35, -35]);
+
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
   const [expandedCard, setExpandedCard] = useState<string | null>(null);
 
   return (
     <section
       id="membership"
-      ref={ref}
-      className="py-20 sm:py-28 lg:py-36 relative overflow-hidden"
+      ref={sectionRef}
+      className="py-24 sm:py-32 lg:py-44 relative overflow-hidden"
       style={{ background: "var(--background)" }}
     >
-      {/* Section edge lines */}
-      <div
-        className="absolute top-0 inset-x-0 h-px"
-        style={{
-          background: `linear-gradient(90deg, transparent, ${GREEN_A(0.25)}, transparent)`,
-        }}
-      />
-      <div
-        className="absolute bottom-0 inset-x-0 h-px"
-        style={{
-          background: `linear-gradient(90deg, transparent, ${GREEN_A(0.25)}, transparent)`,
-        }}
-      />
-
-      {/* Subtle grid */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `linear-gradient(${GREEN_A(0.04)} 1px, transparent 1px), linear-gradient(90deg, ${GREEN_A(0.04)} 1px, transparent 1px)`,
-          backgroundSize: "64px 64px",
-        }}
-      />
-
-      {/* Ambient glows */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] rounded-full pointer-events-none"
-        style={{
-          background: GREEN_A(0.04),
-          filter: "blur(200px)",
-        }}
-      />
-      <div
-        className="absolute top-0 right-0 w-[440px] h-[440px] rounded-full pointer-events-none"
-        style={{
-          background: INDIGO_A(0.04),
-          filter: "blur(180px)",
-        }}
-      />
+      {/* ── Background textures ── */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden>
+        <motion.div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] rounded-full"
+          style={{
+            background: GREEN_A(0.04),
+            filter: "blur(200px)",
+            y: glowY
+          }}
+        />
+        <motion.div
+          className="absolute top-0 right-0 w-[440px] h-[440px] rounded-full"
+          style={{
+            background: INDIGO_A(0.04),
+            filter: "blur(180px)",
+            y: bgY
+          }}
+        />
+      </div>
 
       <div className="relative w-full px-4 sm:px-6 lg:px-8">
 
@@ -969,7 +959,10 @@ export default function Membership() {
         <PerksStrip isInView={isInView} />
 
         {/* ── Plan Cards Grid ── */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-4 lg:gap-5 items-start">
+        <motion.div 
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-4 lg:gap-5 items-start"
+          style={{ y: cardDrift }}
+        >
           {plans.map((plan, i) => (
             <PlanCard
               key={plan.id}
@@ -982,7 +975,7 @@ export default function Membership() {
               }
             />
           ))}
-        </div>
+        </motion.div>
 
         <CompareBanner isInView={isInView} />
         <ContactNote isInView={isInView} />
