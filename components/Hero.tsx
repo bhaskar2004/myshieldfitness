@@ -20,8 +20,8 @@ const GLOBAL_CSS = `
     --sf-muted:       rgba(28,26,21,0.42);
     --sf-rule:        rgba(28,26,21,0.08);
     --sf-border:      rgba(28,26,21,0.09);
-    --sf-amber:       #c4841a;
-    --sf-amber-mid:   #d4962a;
+    --sf-amber:       #c4501aff;
+    --sf-amber-mid:   #d47f2aff;
     --sf-amber-dim:   rgba(196,132,26,0.12);
     --sf-amber-glow:  rgba(196,132,26,0.055);
     --sf-indigo:      #5b4db5;
@@ -113,13 +113,13 @@ export default function Hero() {
 
             <div style={{ marginBottom: "clamp(18px, 3vh, 32px)" }}>
               <div style={{ overflow: "hidden", lineHeight: 0.88 }}>
-                <span className="sf-slide-1" style={{ display: "block", fontFamily: "var(--font-hero)", fontSize: "clamp(48px, 10.5vw, 148px)", letterSpacing: "-0.025em", fontStyle: "italic", fontWeight: 400 }}>Shield</span>
+                <span className="sf-slide-1" style={{ display: "block", fontFamily: "var(--font-hero)", fontSize: "clamp(48px, 10.5vw, 148px)", letterSpacing: "-0.025em", fontStyle: "italic", fontWeight: 800 }}>Shield</span>
               </div>
               <div style={{ overflow: "hidden", lineHeight: 0.88 }}>
-                <span className="sf-slide-2" style={{ display: "block", fontFamily: "var(--font-hero)", fontSize: "clamp(48px, 10.5vw, 148px)", letterSpacing: "-0.025em", fontWeight: 400, WebkitTextStroke: "1.2px rgba(28,26,21,0.28)", color: "transparent" }}>Fitness</span>
+                <span className="sf-slide-2" style={{ display: "block", fontFamily: "var(--font-hero)", fontSize: "clamp(48px, 10.5vw, 148px)", letterSpacing: "-0.025em", fontWeight: 800, WebkitTextStroke: "1.2px rgba(28,26,21,0.28)", color: "transparent" }}>Fitness</span>
               </div>
               <div style={{ overflow: "hidden", lineHeight: 0.88 }}>
-                <span className="sf-slide-3" style={{ display: "block", fontFamily: "var(--font-hero)", fontSize: "clamp(48px, 10.5vw, 148px)", letterSpacing: "-0.025em", fontStyle: "italic", color: "var(--sf-amber)", fontWeight: 400 }}>Club</span>
+                <span className="sf-slide-3" style={{ display: "block", fontFamily: "var(--font-hero)", fontSize: "clamp(48px, 10.5vw, 148px)", letterSpacing: "-0.025em", fontStyle: "italic", color: "var(--sf-amber)", fontWeight: 800 }}>Club</span>
               </div>
             </div>
 
