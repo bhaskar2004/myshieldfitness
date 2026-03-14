@@ -163,7 +163,7 @@ function FeaturedReview({ review, isInView }: { review: typeof reviews[0]; isInV
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(135deg, var(--contact-bg) 0%, var(--foreground) 50%, var(--foreground) 100%)",
+            "linear-gradient(135deg, var(--card) 0%, var(--background) 50%, var(--background) 100%)",
         }}
       />
       <div

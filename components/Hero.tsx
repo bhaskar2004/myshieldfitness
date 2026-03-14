@@ -17,9 +17,9 @@ const GLOBAL_CSS = `
   :root {
     --sf-bg:          var(--background);
     --sf-fg:          #1c1a15;
-    --sf-muted:       rgba(28,26,21,0.42);
+    --sf-muted:       rgba(0, 0, 0, 0.83);
     --sf-rule:        rgba(28,26,21,0.08);
-    --sf-border:      rgba(28,26,21,0.09);
+    --sf-border:      rgba(8, 8, 8, 0.8);
     --sf-amber:       #c4501aff;
     --sf-amber-mid:   #d47f2aff;
     --sf-amber-dim:   rgba(196,132,26,0.12);
@@ -116,7 +116,7 @@ export default function Hero() {
                 <span className="sf-slide-1" style={{ display: "block", fontFamily: "var(--font-hero)", fontSize: "clamp(48px, 10.5vw, 148px)", letterSpacing: "-0.025em", fontStyle: "italic", fontWeight: 800 }}>Shield</span>
               </div>
               <div style={{ overflow: "hidden", lineHeight: 0.88 }}>
-                <span className="sf-slide-2" style={{ display: "block", fontFamily: "var(--font-hero)", fontSize: "clamp(48px, 10.5vw, 148px)", letterSpacing: "-0.025em", fontWeight: 800, WebkitTextStroke: "1.2px rgba(28,26,21,0.28)", color: "transparent" }}>Fitness</span>
+                <span className="sf-slide-2" style={{ display: "block", fontFamily: "var(--font-hero)", fontSize: "clamp(48px, 10.5vw, 148px)", letterSpacing: "-0.025em", fontWeight: 800, WebkitTextStroke: "1.2px rgba(0, 0, 0, 1)", color: "transparent" }}>Fitness</span>
               </div>
               <div style={{ overflow: "hidden", lineHeight: 0.88 }}>
                 <span className="sf-slide-3" style={{ display: "block", fontFamily: "var(--font-hero)", fontSize: "clamp(48px, 10.5vw, 148px)", letterSpacing: "-0.025em", fontStyle: "italic", color: "var(--sf-amber)", fontWeight: 800 }}>Club</span>
