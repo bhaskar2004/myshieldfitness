@@ -300,13 +300,13 @@ export default function Navbar() {
       >
         {/* Glass panel */}
         <div
-          className="absolute inset-0 transition-all duration-600"
+          className="absolute inset-0 transition-all duration-700"
           style={{
             background: scrolled ? "var(--background)" : "transparent",
-            backdropFilter: scrolled ? "blur(22px) saturate(170%)" : "none",
-            WebkitBackdropFilter: scrolled ? "blur(22px) saturate(170%)" : "none",
-            borderBottom: scrolled ? `1px solid ${aa(0.10)}` : "1px solid transparent",
-            opacity: scrolled ? 0.92 : 1,
+            backdropFilter: scrolled ? "blur(24px) saturate(180%)" : "none",
+            WebkitBackdropFilter: scrolled ? "blur(24px) saturate(180%)" : "none",
+            borderBottom: scrolled ? `1px solid ${aa(0.12)}` : "1px solid transparent",
+            opacity: scrolled ? 0.96 : 1,
           }}
         />
         {/* Scroll progress */}
@@ -344,8 +344,7 @@ export default function Navbar() {
               <div className="flex flex-col leading-none">
                 <span style={{
                   fontFamily: "var(--font-display)",
-                  fontWeight: 900,
-                  fontStyle: "italic",
+                  fontWeight: 400,
                   fontSize: "clamp(16px, 3.5vw, 22px)",
                   letterSpacing: "0.06em",
                   textTransform: "uppercase",
@@ -556,8 +555,7 @@ export default function Navbar() {
                   <div>
                     <p style={{
                       fontFamily: "var(--font-display)",
-                      fontWeight: 900,
-                      fontStyle: "italic",
+                      fontWeight: 400,
                       fontSize: "17px",
                       letterSpacing: "0.08em",
                       textTransform: "uppercase",
@@ -672,8 +670,7 @@ export default function Navbar() {
                         {/* Label */}
                         <span style={{
                           fontFamily: "var(--font-display)",
-                          fontWeight: 900,
-                          fontStyle: "italic",
+                          fontWeight: 400,
                           textTransform: "uppercase",
                           fontSize: "clamp(1.2rem, 5.5vw, 1.45rem)",
                           letterSpacing: "0.04em",

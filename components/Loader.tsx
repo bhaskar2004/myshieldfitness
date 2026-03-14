@@ -237,8 +237,7 @@ export default function Loader() {
                         {/* Primary — large, italic display */}
                         <span style={{
                             fontFamily: "var(--font-display)",
-                            fontWeight: 900,
-                            fontStyle: "italic",
+                            fontWeight: 400,
                             fontSize: "clamp(22px, 5vw, 30px)",
                             letterSpacing: "0.12em",
                             textTransform: "uppercase",

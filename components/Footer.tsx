@@ -68,7 +68,7 @@ function FooterBody() {
               <img src="/favicon.jpg" alt="Shield's Fitness" className="w-full h-full object-cover scale-150" />
             </div>
             <div>
-              <p className="font-display font-black text-lg leading-none tracking-[0.1em] sm:tracking-[0.15em]" style={{ color: "var(--foreground)" }}>
+              <p className="font-display text-lg leading-none tracking-[0.1em] sm:tracking-[0.15em]" style={{ color: "var(--foreground)" }}>
                 SHIELD&apos;S
               </p>
               <p className="text-[9px] tracking-[0.2em] sm:tracking-[0.4em] uppercase font-mono font-bold mt-0.5" style={{ color: "var(--primary)" }}>
@@ -317,11 +317,14 @@ function ScrollToTop() {
       animate={{ opacity: visible ? 1 : 0, scale: visible ? 1 : 0.8 }}
       whileHover={{ scale: 1.1, y: -2 }}
       whileTap={{ scale: 0.9 }}
-      className="fixed bottom-6 right-6 w-11 h-11 rounded-xl flex items-center justify-center z-50 transition-shadow hover:shadow-xl"
+      className="fixed bottom-8 right-5 w-12 h-12 rounded-2xl flex items-center justify-center z-[60] transition-all duration-300 hover:shadow-2xl"
       style={{
-        background: "var(--primary)",
-        color: "var(--primary-foreground)",
-        boxShadow: "0 4px 20px oklch(0.72 0.18 48 / 0.4)",
+        background: "oklch(0.72 0.18 48 / 0.85)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+        color: "oklch(0.15 0.02 60)",
+        border: "1px solid oklch(0.72 0.18 48 / 0.4)",
+        boxShadow: "0 8px 32px oklch(0.72 0.18 48 / 0.25)",
         pointerEvents: visible ? "auto" : "none",
       }}
       aria-label="Scroll to top"

@@ -300,7 +300,7 @@ function ContactForm({ isInView }: { isInView: boolean }) {
             <TbRocket style={{ color: "var(--primary)" }} size={18} />
           </div>
           <div>
-            <h3 className="font-display font-black italic text-xl sm:text-2xl leading-none" style={{ color: "var(--foreground)" }}>
+            <h3 className="font-display text-xl sm:text-2xl leading-none" style={{ color: "var(--foreground)" }}>
               BOOK YOUR FREE TRIAL
             </h3>
             <p className="font-mono text-[10px] tracking-widest mt-0.5" style={{ color: "var(--muted-foreground)" }}>
@@ -406,7 +406,7 @@ function ContactForm({ isInView }: { isInView: boolean }) {
                         >
                           <Icon size={14} style={{ color: isSelected ? "var(--primary-foreground)" : "var(--primary)" }} />
                         </div>
-                        <p className={`font-display font-black italic text-[9px] uppercase tracking-wider mb-0.5 text-center ${isSelected ? "text-primary" : "text-foreground"}`}>
+                        <p className={`font-display text-[9px] uppercase tracking-wider mb-0.5 text-center ${isSelected ? "text-primary" : "text-foreground"}`}>
                           {p.label}
                         </p>
                         <p className="font-mono text-[8px] opacity-40 uppercase tracking-widest">
@@ -532,7 +532,7 @@ export default function Contact() {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.1 }}
-            className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-black italic text-text-hi leading-[0.92]"
+            className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display text-text-hi leading-[0.92]"
           >
             START YOUR
             <br />

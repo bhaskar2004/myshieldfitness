@@ -240,15 +240,15 @@ function FacilityCard({
             <span style={{
               fontFamily: "var(--font-mono)",
               fontWeight: 700,
-              fontSize: "8px",
+              fontSize: "9px",
               letterSpacing: "0.14em",
               textTransform: "uppercase",
               lineHeight: 1,
               color: color,
               background: alpha(0.10),
               border: "1px solid var(--foreground)",
-              borderRadius: "4px",
-              padding: "3px 7px",
+              borderRadius: "6px",
+              padding: "4px 9px",
             }}>
               {fac.tag}
             </span>
@@ -276,8 +276,7 @@ function FacilityCard({
           <div className="flex-1 flex flex-col">
             <h3 style={{
               fontFamily: "var(--font-display)",
-              fontWeight: 900,
-              fontStyle: "italic",
+              fontWeight: 400,
               textTransform: "uppercase",
               fontSize: "clamp(0.88rem, 1.8vw, 1.1rem)",
               letterSpacing: "0.04em",
@@ -422,8 +421,7 @@ export default function Facilities() {
                   transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
                   style={{
                     fontFamily: "var(--font-display)",
-                    fontWeight: 900,
-                    fontStyle: "italic",
+                    fontWeight: 400,
                     textTransform: "uppercase",
                     fontSize: "clamp(2.6rem, 7.5vw, 5rem)",
                     letterSpacing: "-0.01em",
@@ -479,8 +477,7 @@ export default function Facilities() {
                   <div>
                     <span style={{
                       fontFamily: "var(--font-display)",
-                      fontWeight: 900,
-                      fontStyle: "italic",
+                      fontWeight: 400,
                       fontSize: "clamp(2.8rem, 5vw, 3.8rem)",
                       lineHeight: 1,
                       color: ACCENT,
@@ -566,8 +563,7 @@ export default function Facilities() {
               <div>
                 <h4 style={{
                   fontFamily: "var(--font-display)",
-                  fontWeight: 900,
-                  fontStyle: "italic",
+                  fontWeight: 400,
                   textTransform: "uppercase",
                   fontSize: "clamp(1rem, 2.2vw, 1.25rem)",
                   letterSpacing: "0.05em",

@@ -401,7 +401,7 @@ export default function Reviews() {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.1 }}
-              className="text-4xl xs:text-5xl lg:text-6xl xl:text-7xl font-display font-black italic text-text-hi leading-[0.92]"
+              className="text-4xl xs:text-5xl lg:text-6xl xl:text-7xl font-display text-text-hi leading-[0.92]"
             >
               REAL RESULTS,
               <br />
@@ -429,7 +429,7 @@ export default function Reviews() {
                 <FcGoogle size={22} />
                 <span className="text-text-lo font-mono text-xs tracking-widest">Google</span>
               </div>
-              <p className="text-text-hi font-display font-black text-4xl sm:text-5xl leading-none">4.8</p>
+              <p className="text-text-hi font-display text-4xl sm:text-5xl leading-none">4.8</p>
               <div className="flex justify-center my-2">
                 <Stars rating={5} size={14} />
               </div>

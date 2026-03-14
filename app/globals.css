@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -13,7 +13,7 @@
   color-scheme: light;
 
   /* ── Fonts ── */
-  --font-display: "Orbitron", sans-serif;
+  --font-display: "Anton", sans-serif;
   --font-body: "Space Grotesk", sans-serif;
   --font-mono: "Space Grotesk", monospace;
 
@@ -118,11 +118,12 @@ h3,
 h4,
 .font-display {
   font-family: var(--font-display);
-  font-weight: 900;
-  letter-spacing: 0.1em;
+  font-weight: 400;
+  /* Anton only has 400 weight */
+  letter-spacing: 0.02em;
+  /* Anton is very tight, so we can adjust */
   line-height: 0.95;
   text-transform: uppercase;
-  font-style: italic;
   color: var(--foreground);
 }
 

@@ -503,7 +503,7 @@ export default function InstagramSection() {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.1 }}
-              className="text-4xl xs:text-5xl lg:text-6xl xl:text-7xl font-display font-black italic text-text-hi leading-[0.92] tracking-tighter"
+              className="text-4xl xs:text-5xl lg:text-6xl xl:text-7xl font-display text-text-hi leading-[0.92] tracking-tighter"
             >
               FOLLOW
               <br />

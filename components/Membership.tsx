@@ -402,7 +402,7 @@ function PlanCard({
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
             <p
-              className="font-display font-black italic leading-none"
+              className="font-display leading-none"
               style={{
                 fontSize: "1.05rem",
                 color: plan.popular ? "oklch(1 0 0 / 0.92)" : "var(--foreground)",
@@ -436,7 +436,7 @@ function PlanCard({
         <div className="flex items-center gap-2.5 flex-shrink-0">
           <div className="text-right">
             <p
-              className="font-display font-black italic leading-none"
+              className="font-display leading-none"
               style={{
                 fontSize: "1.3rem",
                 color: plan.popular ? GREEN : "var(--foreground)",
@@ -603,7 +603,7 @@ function PlanCard({
               <PlanIcon style={{ color: plan.solidColor }} size={18} />
             </div>
             <p
-              className="font-display font-black italic leading-none"
+              className="font-display leading-none"
               style={{ fontSize: "clamp(1.3rem, 3vw, 1.6rem)", color: plan.popular ? "oklch(1 0 0 / 0.92)" : "var(--foreground)" }}
             >
               {plan.name}
@@ -628,7 +628,7 @@ function PlanCard({
         <div className="mb-5 pb-5" style={{ borderBottom: "1px solid var(--foreground)" }}>
           <div className="flex items-end gap-1">
             <span className="font-mono text-lg font-bold mb-0.5" style={{ color: "var(--muted-foreground)" }}>₹</span>
-            <span className="font-display font-black italic leading-none" style={{ fontSize: "clamp(2.4rem, 5vw, 3rem)", color: plan.popular ? GREEN : "var(--foreground)" }}>
+            <span className="font-display leading-none" style={{ fontSize: "clamp(2.4rem, 5vw, 3rem)", color: plan.popular ? GREEN : "var(--foreground)" }}>
               {plan.price}
             </span>
           </div>
@@ -793,53 +793,56 @@ function ContactNote({ isInView }: { isInView: boolean }) {
       initial={{ opacity: 0 }}
       animate={isInView ? { opacity: 1 } : {}}
       transition={{ delay: 1.0 }}
-      className="flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-10 mt-8 pt-8"
-      style={{ borderTop: "1px solid var(--border)" }}
+      className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10 mt-12 pt-10"
+      style={{ borderTop: `1px solid ${GREEN_A(0.12)}` }}
     >
       <a
         href="tel:9019342121"
-        className="group flex items-center gap-3 font-mono text-xs transition-colors"
+        className="group flex items-center gap-3 font-mono text-xs transition-colors w-full sm:w-auto justify-center"
         style={{ color: "var(--muted-foreground)" }}
       >
         <div
-          className="w-8 h-8 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform"
-          style={{ background: GREEN_A(0.12) }}
+          className="w-10 h-10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform"
+          style={{ background: GREEN_A(0.12), border: `1px solid ${GREEN_A(0.25)}` }}
         >
-          <FiPhone style={{ color: GREEN }} size={13} />
+          <FiPhone style={{ color: GREEN }} size={15} />
         </div>
-        Call{" "}
-        <span
-          className="font-bold underline underline-offset-2 decoration-dotted"
-          style={{ color: GREEN }}
-        >
-          9019342121
-        </span>{" "}
-        to confirm pricing
+        <div className="flex flex-col sm:flex-row sm:items-center gap-1">
+          <span className="opacity-70">Call to confirm pricing:</span>
+          <span
+            className="font-bold underline underline-offset-4 decoration-dotted"
+            style={{ color: GREEN }}
+          >
+            9019342121
+          </span>
+        </div>
       </a>
 
       <div
-        className="h-4 w-px hidden sm:block"
-        style={{ background: "var(--border)" }}
+        className="h-6 w-px hidden sm:block"
+        style={{ background: GREEN_A(0.15) }}
       />
 
       <button
         onClick={scrollToContact}
-        className="group flex items-center gap-3 font-mono text-xs transition-colors"
+        className="group flex items-center gap-3 font-mono text-xs transition-colors w-full sm:w-auto justify-center"
         style={{ color: "var(--muted-foreground)" }}
       >
         <div
-          className="w-8 h-8 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform"
-          style={{ background: GREEN_A(0.12) }}
+          className="w-10 h-10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform"
+          style={{ background: GREEN_A(0.12), border: `1px solid ${GREEN_A(0.25)}` }}
         >
-          <MdFitnessCenter style={{ color: GREEN }} size={13} />
+          <MdFitnessCenter style={{ color: GREEN }} size={15} />
         </div>
-        Or{" "}
-        <span
-          className="font-bold group-hover:underline underline-offset-2"
-          style={{ color: GREEN }}
-        >
-          Book a Free Trial Session
-        </span>
+        <div className="flex flex-col sm:flex-row sm:items-center gap-1">
+          <span className="opacity-70">New here?</span>
+          <span
+            className="font-bold group-hover:underline underline-offset-4"
+            style={{ color: GREEN }}
+          >
+            Book a Free Trial Session
+          </span>
+        </div>
       </button>
     </motion.div>
   );
@@ -966,7 +969,7 @@ export default function Membership() {
         <PerksStrip isInView={isInView} />
 
         {/* ── Plan Cards Grid ── */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 lg:gap-5 items-start">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-4 lg:gap-5 items-start">
           {plans.map((plan, i) => (
             <PlanCard
               key={plan.id}
