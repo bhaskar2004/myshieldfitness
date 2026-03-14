@@ -27,7 +27,7 @@ export default function Home() {
         <MarqueeRow items={tickerRow3} speed={25} />
         <About />
       </SectionReveal>
-      
+
       <SectionReveal>
         <MarqueeRow items={tickerRow1} dark speed={32} />
         <Facilities />
@@ -43,14 +43,14 @@ export default function Home() {
         <Reviews />
       </SectionReveal>
 
-      <SectionReveal>
+      {/* <SectionReveal>
         <InstagramSection />
-      </SectionReveal>
+      </SectionReveal> */}
 
       <SectionReveal>
         <Contact />
       </SectionReveal>
-      
+
       <Footer />
     </main>
   );

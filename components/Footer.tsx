@@ -230,6 +230,25 @@ function FooterBody() {
                 @shields_basavanagudi
               </span>
             </a>
+
+            <a
+              href="https://bhaskar.xyz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 group/dev mt-2"
+            >
+              <div
+                className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 bg-orange-500/10"
+              >
+                <FiZap className="text-orange-400" size={12} />
+              </div>
+              <span
+                className="font-mono text-xs transition-colors group-hover/dev:text-foreground"
+                style={{ color: "var(--muted-foreground)" }}
+              >
+                Meet the developer
+              </span>
+            </a>
           </div>
         </div>
 
