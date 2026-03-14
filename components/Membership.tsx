@@ -935,7 +935,7 @@ export default function Membership() {
             transition={{ delay: 0.1 }}
             className="font-display font-black italic leading-[0.92]"
             style={{
-              fontSize: "clamp(2.6rem, 8vw, 5rem)",
+              fontSize: "clamp(2rem, 8vw, 5rem)",
               color: "var(--foreground)",
             }}
           >

@@ -263,7 +263,7 @@ export default function About() {
                 animate={isInView ? { y: "0%" } : {}}
                 transition={{ duration: 0.7, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
                 style={{ color: "var(--foreground)" }}
-                className="text-4xl xs:text-5xl lg:text-[64px] font-display leading-[0.92]"
+                className="text-3xl xs:text-4xl lg:text-[64px] font-display leading-[0.92]"
               >
                 MORE THAN
               </motion.h2>
@@ -273,7 +273,7 @@ export default function About() {
                 initial={{ y: "100%" }}
                 animate={isInView ? { y: "0%" } : {}}
                 transition={{ duration: 0.7, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
-                className="text-4xl xs:text-5xl lg:text-[64px] font-display leading-[0.92]"
+                className="text-3xl xs:text-4xl lg:text-[64px] font-display leading-[0.92]"
                 style={{
                   WebkitTextStroke: "1px var(--primary)",
                   color: "transparent",

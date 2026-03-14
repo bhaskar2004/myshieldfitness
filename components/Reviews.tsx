@@ -401,7 +401,7 @@ export default function Reviews() {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.1 }}
-              className="text-4xl xs:text-5xl lg:text-6xl xl:text-7xl font-display text-text-hi leading-[0.92]"
+              className="text-3xl xs:text-4xl lg:text-6xl xl:text-7xl font-display text-text-hi leading-[0.92]"
             >
               REAL RESULTS,
               <br />

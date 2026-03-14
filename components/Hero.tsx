@@ -15,7 +15,7 @@ const GLOBAL_CSS = `
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;1,9..144,200;1,9..144,300&family=DM+Mono:wght@300;400;500&display=swap');
 
   :root {
-    --sf-bg:          #faf8f4;
+    --sf-bg:          var(--background);
     --sf-fg:          #1c1a15;
     --sf-muted:       rgba(28,26,21,0.42);
     --sf-rule:        rgba(28,26,21,0.08);
@@ -113,13 +113,13 @@ export default function Hero() {
 
             <div style={{ marginBottom: "clamp(18px, 3vh, 32px)" }}>
               <div style={{ overflow: "hidden", lineHeight: 0.88 }}>
-                <span className="sf-slide-1" style={{ display: "block", fontFamily: "var(--sf-serif)", fontSize: "clamp(64px, 10.5vw, 148px)", letterSpacing: "-0.025em", fontStyle: "italic", fontWeight: 200 }}>Shield</span>
+                <span className="sf-slide-1" style={{ display: "block", fontFamily: "var(--sf-serif)", fontSize: "clamp(48px, 10.5vw, 148px)", letterSpacing: "-0.025em", fontStyle: "italic", fontWeight: 200 }}>Shield</span>
               </div>
               <div style={{ overflow: "hidden", lineHeight: 0.88 }}>
-                <span className="sf-slide-2" style={{ display: "block", fontFamily: "var(--sf-serif)", fontSize: "clamp(64px, 10.5vw, 148px)", letterSpacing: "-0.025em", fontWeight: 300, WebkitTextStroke: "1.2px rgba(28,26,21,0.28)", color: "transparent" }}>Fitness</span>
+                <span className="sf-slide-2" style={{ display: "block", fontFamily: "var(--sf-serif)", fontSize: "clamp(48px, 10.5vw, 148px)", letterSpacing: "-0.025em", fontWeight: 300, WebkitTextStroke: "1.2px rgba(28,26,21,0.28)", color: "transparent" }}>Fitness</span>
               </div>
               <div style={{ overflow: "hidden", lineHeight: 0.88 }}>
-                <span className="sf-slide-3" style={{ display: "block", fontFamily: "var(--sf-serif)", fontSize: "clamp(64px, 10.5vw, 148px)", letterSpacing: "-0.025em", fontStyle: "italic", color: "var(--sf-amber)", fontWeight: 200 }}>Club</span>
+                <span className="sf-slide-3" style={{ display: "block", fontFamily: "var(--sf-serif)", fontSize: "clamp(48px, 10.5vw, 148px)", letterSpacing: "-0.025em", fontStyle: "italic", color: "var(--sf-amber)", fontWeight: 200 }}>Club</span>
               </div>
             </div>
 
@@ -136,7 +136,7 @@ export default function Hero() {
 
             <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
               <button onClick={() => scrollTo("#membership")} onMouseEnter={() => setFillHover(true)} onMouseLeave={() => setFillHover(false)} style={{ padding: "13px 26px", background: fillHover ? "var(--sf-amber-mid)" : "var(--sf-amber)", color: "#fff", border: "none", borderRadius: 3, fontFamily: "var(--sf-mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.22s" }}>Join The Club</button>
-              <button onClick={() => scrollTo("#programs")} onMouseEnter={() => setOutlineHover(true)} onMouseLeave={() => setOutlineHover(false)} style={{ padding: "12px 22px", background: outlineHover ? "rgba(28,26,21,0.03)" : "transparent", color: "var(--sf-fg)", border: "1px solid var(--sf-border)", borderRadius: 3, fontFamily: "var(--sf-mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.22s" }}>View Programs</button>
+              <button onClick={() => scrollTo("#facilities")} onMouseEnter={() => setOutlineHover(true)} onMouseLeave={() => setOutlineHover(false)} style={{ padding: "12px 22px", background: outlineHover ? "rgba(28,26,21,0.03)" : "transparent", color: "var(--sf-fg)", border: "1px solid var(--sf-border)", borderRadius: 3, fontFamily: "var(--sf-mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.22s" }}>View Programs</button>
             </div>
           </div>
 

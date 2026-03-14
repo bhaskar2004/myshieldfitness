@@ -82,7 +82,7 @@ function TrustBar({ isInView }: { isInView: boolean }) {
       initial={{ opacity: 0, y: 12 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: 0.38 }}
-      className="flex flex-wrap sm:flex-nowrap items-center justify-center sm:divide-x divide-foreground/[0.08] border border-foreground rounded-2xl overflow-hidden mb-12"
+      className="flex flex-wrap sm:flex-nowrap items-center justify-center sm:divide-x divide-foreground/[0.08] border border-foreground rounded-2xl overflow-hidden mb-8"
     >
       {TRUST_BADGES.map((b, i) => {
         const Icon = b.icon;
@@ -92,7 +92,7 @@ function TrustBar({ isInView }: { isInView: boolean }) {
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ delay: 0.43 + i * 0.07 }}
-            className="flex items-center gap-2.5 px-5 py-3 bg-foreground/[0.01] hover:bg-foreground/[0.03] transition-colors w-1/2 sm:w-auto sm:flex-1 justify-center group cursor-default"
+            className="flex items-center gap-2.5 px-3 py-2 bg-foreground/[0.01] hover:bg-foreground/[0.03] transition-colors w-1/2 sm:w-auto sm:flex-1 justify-center group cursor-default"
           >
             <Icon size={14} style={{ color: "var(--primary)" }} className="group-hover:scale-110 transition-transform" />
             <span className="font-mono text-[10px] tracking-widest uppercase" style={{ color: "var(--muted-foreground)" }}>{b.label}</span>
@@ -111,7 +111,7 @@ function PromoStrip({ isInView }: { isInView: boolean }) {
       initial={{ opacity: 0, y: 10 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: 0.32 }}
-      className="flex items-center gap-3 sm:gap-5 rounded-xl px-4 sm:px-5 py-3 mb-6"
+      className="flex items-center gap-3 sm:gap-5 rounded-xl px-3 sm:px-5 py-2 mb-4"
       style={{
         border: "1px solid var(--foreground)",
         background: "oklch(0.72 0.18 48 / 0.07)",
@@ -148,7 +148,7 @@ function InfoCard({
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: 0.2 + index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-      className="relative flex flex-col gap-3 rounded-2xl border border-foreground p-4 sm:p-5 transition-all duration-300 overflow-hidden group"
+      className="relative flex flex-col gap-3 rounded-2xl border border-foreground p-3 sm:p-5 transition-all duration-300 overflow-hidden group"
       style={{ background: "var(--card)" }}
     >
       {/* Corner glow */}
@@ -265,7 +265,7 @@ function ContactForm({ isInView }: { isInView: boolean }) {
   };
 
   const inputClass = (field: string) =>
-    `w-full border rounded-xl px-4 py-3 placeholder-text-lo/40 text-sm font-mono focus:outline-none transition-all duration-200 ${errors[field]
+    `w-full border rounded-xl px-3 py-2.5 placeholder-text-lo/40 text-sm font-mono focus:outline-none transition-all duration-200 ${errors[field]
       ? "border-red-500/60 focus:border-red-400 shadow-[0_0_0_1px_rgba(239,68,68,0.2)]"
       : "border-foreground focus:border-accent shadow-sm"
     }`;
@@ -294,7 +294,7 @@ function ContactForm({ isInView }: { isInView: boolean }) {
         style={{ backgroundImage: "radial-gradient(circle at 80% 0%, var(--primary), transparent 55%)" }}
       />
 
-      <div className="relative border-b border-foreground px-6 sm:px-8 py-5">
+      <div className="relative border-b border-foreground px-4 sm:px-8 py-4">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "oklch(0.72 0.18 48 / 0.12)" }}>
             <TbRocket style={{ color: "var(--primary)" }} size={18} />
@@ -310,7 +310,7 @@ function ContactForm({ isInView }: { isInView: boolean }) {
         </div>
       </div>
 
-      <div className="relative px-6 sm:px-8 py-6">
+      <div className="relative px-4 sm:px-8 py-5">
         <AnimatePresence mode="wait">
           {submitted ? (
             <motion.div
@@ -396,7 +396,7 @@ function ContactForm({ isInView }: { isInView: boolean }) {
                         key={p.value}
                         type="button"
                         onClick={() => selectPlan(p.value)}
-                        className={`relative flex flex-col items-center justify-center p-3 rounded-xl border transition-all duration-300 group ${isSelected
+                        className={`relative flex flex-col items-center justify-center p-2 rounded-xl border transition-all duration-300 group ${isSelected
                           ? "border-foreground bg-primary/10 shadow-[0_0_20px_oklch(0.72_0.18_48_/_0.15)]"
                           : "border-foreground bg-foreground/[0.02]"
                           }`}
@@ -453,7 +453,7 @@ function ContactForm({ isInView }: { isInView: boolean }) {
                 onClick={handleSubmit}
                 disabled={loading}
                 whileTap={{ scale: 0.98 }}
-                className="relative w-full py-4 rounded-xl font-mono font-bold text-sm tracking-widest uppercase flex items-center justify-center gap-2.5 overflow-hidden transition-all duration-300 hover:brightness-110 disabled:opacity-70"
+                className="relative w-full py-3 rounded-xl font-mono font-bold text-sm tracking-widest uppercase flex items-center justify-center gap-2.5 overflow-hidden transition-all duration-300 hover:brightness-110 disabled:opacity-70"
                 style={{
                   background: "var(--primary)",
                   color: "var(--primary-foreground)",
@@ -505,7 +505,7 @@ export default function Contact() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="contact" ref={ref} className="py-20 sm:py-24 lg:py-32 relative overflow-hidden" style={{ background: "var(--background)" }}>
+    <section id="contact" ref={ref} className="py-12 sm:py-24 lg:py-32 relative overflow-hidden" style={{ background: "var(--background)" }}>
       {/* Ambient glows */}
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent/[0.05] blur-[180px] rounded-full pointer-events-none" />
       <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-purple-600/[0.04] blur-[160px] rounded-full pointer-events-none" />
@@ -514,7 +514,7 @@ export default function Contact() {
       <div className="w-full px-4 sm:px-6 lg:px-8">
 
         {/* ── Header ── */}
-        <div className="text-center mb-10 sm:mb-14">
+        <div className="text-center mb-6 sm:mb-14">
           <motion.div
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
@@ -532,7 +532,7 @@ export default function Contact() {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.1 }}
-            className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display text-text-hi leading-[0.92]"
+            className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-display text-text-hi leading-[0.92]"
           >
             START YOUR
             <br />

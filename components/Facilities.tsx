@@ -423,7 +423,7 @@ export default function Facilities() {
                     fontFamily: "var(--font-display)",
                     fontWeight: 400,
                     textTransform: "uppercase",
-                    fontSize: "clamp(2.6rem, 7.5vw, 5rem)",
+                    fontSize: "clamp(2rem, 7.5vw, 5rem)",
                     letterSpacing: "-0.01em",
                     lineHeight: 0.92,
                     color: "var(--foreground)",
