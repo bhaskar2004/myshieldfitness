@@ -125,6 +125,8 @@ type Col = "primary" | "indigo";
 const colorOf = (col: Col) => col === "primary" ? ACCENT : INDIGO;
 const alphaOf = (col: Col) => col === "primary" ? aa : ia;
 
+import { createPortal } from "react-dom";
+
 // ─── Modal Implementation ───────────────────────────────────────────────────
 function FacilityModal({
   fac,
@@ -133,6 +135,9 @@ function FacilityModal({
   fac: (typeof facilities)[0] | null;
   onClose: () => void;
 }) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   const alpha = fac ? alphaOf(fac.col) : aa;
   const color = fac ? colorOf(fac.col) : ACCENT;
 
@@ -145,15 +150,17 @@ function FacilityModal({
     return () => window.removeEventListener("keydown", handleEsc);
   }, [onClose]);
 
-  if (!fac) return null;
+  if (!fac || !mounted) return null;
 
-  return (
-    <AnimatePresence>
+  return createPortal(
+    <AnimatePresence mode="wait">
       <motion.div
+        key="modal-overlay"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6"
+        className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-8"
+        style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh' }}
       >
         {/* Backdrop */}
         <div
@@ -281,7 +288,8 @@ function FacilityModal({
           </div>
         </motion.div>
       </motion.div>
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }
 
