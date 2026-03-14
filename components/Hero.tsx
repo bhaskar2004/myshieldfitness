@@ -113,13 +113,13 @@ export default function Hero() {
 
             <div style={{ marginBottom: "clamp(18px, 3vh, 32px)" }}>
               <div style={{ overflow: "hidden", lineHeight: 0.88 }}>
-                <span className="sf-slide-1" style={{ display: "block", fontFamily: "var(--sf-serif)", fontSize: "clamp(48px, 10.5vw, 148px)", letterSpacing: "-0.025em", fontStyle: "italic", fontWeight: 200 }}>Shield</span>
+                <span className="sf-slide-1" style={{ display: "block", fontFamily: "var(--font-hero)", fontSize: "clamp(48px, 10.5vw, 148px)", letterSpacing: "-0.025em", fontStyle: "italic", fontWeight: 400 }}>Shield</span>
               </div>
               <div style={{ overflow: "hidden", lineHeight: 0.88 }}>
-                <span className="sf-slide-2" style={{ display: "block", fontFamily: "var(--sf-serif)", fontSize: "clamp(48px, 10.5vw, 148px)", letterSpacing: "-0.025em", fontWeight: 300, WebkitTextStroke: "1.2px rgba(28,26,21,0.28)", color: "transparent" }}>Fitness</span>
+                <span className="sf-slide-2" style={{ display: "block", fontFamily: "var(--font-hero)", fontSize: "clamp(48px, 10.5vw, 148px)", letterSpacing: "-0.025em", fontWeight: 400, WebkitTextStroke: "1.2px rgba(28,26,21,0.28)", color: "transparent" }}>Fitness</span>
               </div>
               <div style={{ overflow: "hidden", lineHeight: 0.88 }}>
-                <span className="sf-slide-3" style={{ display: "block", fontFamily: "var(--sf-serif)", fontSize: "clamp(48px, 10.5vw, 148px)", letterSpacing: "-0.025em", fontStyle: "italic", color: "var(--sf-amber)", fontWeight: 200 }}>Club</span>
+                <span className="sf-slide-3" style={{ display: "block", fontFamily: "var(--font-hero)", fontSize: "clamp(48px, 10.5vw, 148px)", letterSpacing: "-0.025em", fontStyle: "italic", color: "var(--sf-amber)", fontWeight: 400 }}>Club</span>
               </div>
             </div>
 
